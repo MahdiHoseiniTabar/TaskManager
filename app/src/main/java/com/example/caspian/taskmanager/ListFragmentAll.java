@@ -3,6 +3,7 @@ package com.example.caspian.taskmanager;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.caspian.taskmanager.model.Task;
+import com.example.caspian.taskmanager.model.TaskLab;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -20,6 +26,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ListFragmentAll extends Fragment {
     private RecyclerView mRecyclerView;
     private AllTaskAdapter allTaskAdapter;
+    private TaskLab mTaskLab;
+    private List<Task> mTaskList;
 
 
     public static ListFragmentAll newInstance() {
@@ -35,6 +43,13 @@ public class ListFragmentAll extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mTaskLab = TaskLab.getmInstance();
+        mTaskList = mTaskLab.getTaskList();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +68,7 @@ public class ListFragmentAll extends Fragment {
 
     public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.TaskHolder>{
 
+
         @NonNull
         @Override
         public TaskHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -64,13 +80,14 @@ public class ListFragmentAll extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
-
+            Task task = mTaskLab.getTask(position);
+            holder.bind(task);
 
         }
 
         @Override
         public int getItemCount() {
-            return 0;
+            return mTaskList.size();
         }
 
         public class TaskHolder extends RecyclerView.ViewHolder{
@@ -79,12 +96,18 @@ public class ListFragmentAll extends Fragment {
             private TextView date;
 
 
+
             public TaskHolder(View itemView) {
                 super(itemView);
 
                 mCircleImageView = itemView.findViewById(R.id.item_list_all_circle_image);
                 title = itemView.findViewById(R.id.item_list_all_title);
                 date = itemView.findViewById(R.id.item_list_all_date);
+            }
+            public void bind(Task task){
+                mCircleImageView.setImageResource(R.drawable.ic_add);
+                title.setText(task.getTitle());
+                date.setText(task.getDate().toString());
             }
         }
     }

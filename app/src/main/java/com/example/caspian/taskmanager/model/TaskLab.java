@@ -50,4 +50,8 @@ public class TaskLab {
     public Task getTask(UUID id){
         return mHashMap.get(id);
     }
+    public Task getTask(int position){
+        return mTaskList.get(position);
+    }
+
 }

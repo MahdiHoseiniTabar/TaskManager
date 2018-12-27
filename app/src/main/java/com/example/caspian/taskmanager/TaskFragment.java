@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,12 +72,12 @@ public class TaskFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                 title = s.toString();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
         ed_Describtion.addTextChangedListener(new TextWatcher() {
@@ -88,6 +89,7 @@ public class TaskFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 describtion = s.toString();
+                Log.i(">>>", "onTextChanged: " + describtion);
             }
 
             @Override
@@ -102,7 +104,7 @@ public class TaskFragment extends Fragment {
             }
         });
         date = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK).getTime();
-
+        Log.i(">>>", "onCreateView: " + title);
         mTaskLab.addTask(title,describtion,date,done);
 
         btn_save.setOnClickListener(new View.OnClickListener() {

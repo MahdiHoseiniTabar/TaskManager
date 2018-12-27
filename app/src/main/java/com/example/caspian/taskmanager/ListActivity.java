@@ -1,5 +1,7 @@
 package com.example.caspian.taskmanager;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -26,6 +28,10 @@ public class ListActivity extends AppCompatActivity {
     private TaskLab mTaskLab;
     private List<Task> mTaskList;
 
+    public static Intent newIntent(Context context){
+        Intent intent = new Intent(context, ListActivity.class);
+        return intent;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +44,7 @@ public class ListActivity extends AppCompatActivity {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TaskFragment taskFragment = new TaskFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .add(R.id.fragment_container,taskFragment)
-                        .commit();
+                startActivity(TaskActivity.newIntent(ListActivity.this));
 
             }
         });

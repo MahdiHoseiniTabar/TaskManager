@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
 
     tools:context=".ListActivity"
-    android:id="@+id/fragment_container">
+    >
 
 
     <android.support.design.widget.TabLayout

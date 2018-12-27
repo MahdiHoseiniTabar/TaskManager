@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.caspian.taskmanager.DetailActivity;
-import com.example.caspian.taskmanager.ListFragmentAll;
 import com.example.caspian.taskmanager.R;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;

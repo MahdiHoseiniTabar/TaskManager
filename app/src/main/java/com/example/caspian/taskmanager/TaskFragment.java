@@ -70,6 +70,7 @@ public class TaskFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 done = isChecked;
+                Log.i(">=", "onCheckedChanged: " + done);
             }
         });
         date = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK).getTime();
@@ -81,7 +82,9 @@ public class TaskFragment extends Fragment {
                 title = ed_title.getText().toString();
                 describtion = ed_Describtion.getText().toString();
                 mTaskLab.addTask(title,describtion,date,done);
+                onDestroy();
                 startActivity(ListActivity.newIntent(getActivity()));
+
             }
         });
         return view;

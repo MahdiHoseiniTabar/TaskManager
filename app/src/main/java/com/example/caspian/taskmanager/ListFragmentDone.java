@@ -18,6 +18,15 @@ public class ListFragmentDone extends Fragment {
         // Required empty public constructor
     }
 
+    public static ListFragmentDone newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        ListFragmentDone fragment = new ListFragmentDone();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

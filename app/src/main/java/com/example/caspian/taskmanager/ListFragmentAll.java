@@ -22,6 +22,15 @@ public class ListFragmentAll extends Fragment {
     private AllTaskAdapter allTaskAdapter;
 
 
+    public static ListFragmentAll newInstance() {
+
+        Bundle args = new Bundle();
+
+        ListFragmentAll fragment = new ListFragmentAll();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     public ListFragmentAll() {
         // Required empty public constructor
     }

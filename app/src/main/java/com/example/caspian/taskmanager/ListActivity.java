@@ -46,7 +46,10 @@ public class ListActivity extends AppCompatActivity {
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return null;
+                if(position == 0)
+                    return ListFragmentAll.newInstance();
+                else
+                    return ListFragmentDone.newInstance();
             }
 
             @Override

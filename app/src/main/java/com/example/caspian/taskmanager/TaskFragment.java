@@ -64,39 +64,8 @@ public class TaskFragment extends Fragment {
         chkbx_done = view.findViewById(R.id.checkBox_Done);
         btn_save = view.findViewById(R.id.button_save);
 
-        ed_title.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                title = s.toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-        ed_Describtion.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                describtion = s.toString();
-                Log.i(">>>", "onTextChanged: " + describtion);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         chkbx_done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -104,12 +73,15 @@ public class TaskFragment extends Fragment {
             }
         });
         date = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK).getTime();
-        Log.i(">>>", "onCreateView: " + title);
-        mTaskLab.addTask(title,describtion,date,done);
+
 
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                title = ed_title.getText().toString();
+                describtion = ed_Describtion.getText().toString();
+                mTaskLab.addTask(title,describtion,date,done);
                 startActivity(ListActivity.newIntent(getActivity()));
             }
         });

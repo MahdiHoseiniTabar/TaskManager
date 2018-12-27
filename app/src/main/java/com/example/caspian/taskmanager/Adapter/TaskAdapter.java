@@ -7,8 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.caspian.taskmanager.DetailActivity;
 import com.example.caspian.taskmanager.ListFragmentAll;
 import com.example.caspian.taskmanager.R;
 import com.example.caspian.taskmanager.model.Task;
@@ -52,6 +54,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Taskholder> {
     }
 
     public class Taskholder extends RecyclerView.ViewHolder{
+        public RelativeLayout root;
         private CircleImageView mCircleImageView;
         private TextView icon;
         private TextView title;
@@ -59,16 +62,26 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Taskholder> {
 
         public Taskholder(View itemView) {
             super(itemView);
+            root = itemView.findViewById(R.id.root_element);
             mCircleImageView = itemView.findViewById(R.id.item_list_all_circle_image);
             icon = itemView.findViewById(R.id.circle_image_text);
             title = itemView.findViewById(R.id.item_list_all_title);
             date = itemView.findViewById(R.id.item_list_all_date);
         }
-        public void bind(Task task) {
+        public void bind(final Task task) {
             mCircleImageView.setCircleBackgroundColor(Color.BLACK);
             icon.setText(task.getTitle());
             title.setText(task.getTitle());
             date.setText(task.getDate().toString());
+
+            root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mContext.startActivity(DetailActivity.newIntent(mContext, task.getId()));
+                }
+            });
         }
+
     }
+
 }

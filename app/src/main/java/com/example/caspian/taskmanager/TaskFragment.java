@@ -78,7 +78,6 @@ public class TaskFragment extends Fragment {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 title = ed_title.getText().toString();
                 describtion = ed_Describtion.getText().toString();
                 mTaskLab.addTask(title,describtion,date,done);

@@ -1,6 +1,7 @@
 package com.example.caspian.taskmanager;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -54,26 +55,26 @@ public class ListFragmentAll extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list_all,container ,false);
+        View view = inflater.inflate(R.layout.fragment_list_all, container, false);
 
         mRecyclerView = view.findViewById(R.id.recycler_all);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         if (allTaskAdapter == null)
-             allTaskAdapter = new AllTaskAdapter();
+            allTaskAdapter = new AllTaskAdapter();
         mRecyclerView.setAdapter(allTaskAdapter);
 
         return view;
     }
 
-    public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.TaskHolder>{
+    public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.TaskHolder> {
 
 
         @NonNull
         @Override
         public TaskHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(R.layout.item_list_all, parent ,false);
+            View view = layoutInflater.inflate(R.layout.item_list_all, parent, false);
             TaskHolder taskHolder = new TaskHolder(view);
             return taskHolder;
         }
@@ -90,22 +91,24 @@ public class ListFragmentAll extends Fragment {
             return mTaskList.size();
         }
 
-        public class TaskHolder extends RecyclerView.ViewHolder{
+        public class TaskHolder extends RecyclerView.ViewHolder {
             private CircleImageView mCircleImageView;
+            private TextView icon;
             private TextView title;
             private TextView date;
 
 
-
             public TaskHolder(View itemView) {
                 super(itemView);
-
                 mCircleImageView = itemView.findViewById(R.id.item_list_all_circle_image);
+                icon = itemView.findViewById(R.id.circle_image_text);
                 title = itemView.findViewById(R.id.item_list_all_title);
                 date = itemView.findViewById(R.id.item_list_all_date);
             }
-            public void bind(Task task){
-                mCircleImageView.setImageResource(R.drawable.ic_add);
+
+            public void bind(Task task) {
+                mCircleImageView.setCircleBackgroundColor(Color.BLACK);
+                icon.setText(task.getTitle());
                 title.setText(task.getTitle());
                 date.setText(task.getDate().toString());
             }

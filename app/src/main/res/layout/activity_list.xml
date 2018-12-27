@@ -28,6 +28,7 @@
         android:layout_alignRight="@id/view-pager"
         android:layout_alignParentBottom="true"
         app:fabSize="normal"
+        android:src="@drawable/ic_add"
         android:layout_margin="32dp"/>
 
 

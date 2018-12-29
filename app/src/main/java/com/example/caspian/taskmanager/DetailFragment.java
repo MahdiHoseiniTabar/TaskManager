@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.caspian.taskmanager.model.Task;
@@ -18,9 +19,15 @@ import java.util.UUID;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetailFragment extends Fragment {
+public class DetailFragment extends Fragment implements View.OnClickListener {
     public static final String ID = "com.example.caspian.taskmanager.id";
-    private TextView test;
+    private TextView txt_discribtion;
+    private TextView txt_title;
+    private TextView txt_date;
+    private ImageButton imgbtn_done;
+    private ImageButton imgbtn_edit;
+    private ImageButton imgbtn_delete;
+
     private Task mTask;
     private TaskLab mTaskLab;
 
@@ -53,9 +60,50 @@ public class DetailFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
-        test = view.findViewById(R.id.test);
-        test.setText(mTask.getTitle());
+
+        txt_title = view.findViewById(R.id.title_txt);
+        txt_discribtion = view.findViewById(R.id.describtion);
+        txt_date = view.findViewById(R.id.date);
+        imgbtn_done = view.findViewById(R.id.done_imageButton);
+        imgbtn_delete = view.findViewById(R.id.delete);
+        imgbtn_edit = view.findViewById(R.id.edit);
+
+        txt_title.setText(mTask.getTitle());
+        txt_date.setText(mTask.getDate().toString());
+        txt_discribtion.setText(mTask.getDescribtion());
+
+        if (mTask.isDone())
+            imgbtn_done.setVisibility(View.GONE);
+        imgbtn_done.setOnClickListener(this);
+        imgbtn_edit.setOnClickListener(this);
+        imgbtn_delete.setOnClickListener(this);
+
+
         return view;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.done_imageButton:
+                mTaskLab.doneTask(mTask);
+                getActivity().finish();
+                break;
+            case R.id.edit:
+                startActivity(TaskActivity.newIntent(getActivity(), (UUID) getArguments().getSerializable(ID)));
+                break;
+            case R.id.delete:
+                mTaskLab.deleteTask(mTask);
+                getActivity().finish();
+                break;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        txt_title.setText(mTask.getTitle());
+        txt_date.setText(mTask.getDate().toString());
+        txt_discribtion.setText(mTask.getDescribtion());
+    }
 }

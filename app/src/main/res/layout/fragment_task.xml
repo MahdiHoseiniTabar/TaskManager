@@ -52,4 +52,10 @@
         android:layout_marginBottom="8dp"
         android:text="Save"
         />
+
+    <Button
+        android:id="@+id/button_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit" />
 </LinearLayout>

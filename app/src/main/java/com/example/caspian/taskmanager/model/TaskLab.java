@@ -51,5 +51,29 @@ public class TaskLab {
     public Task getTask(int position, List<Task> tasks){
         return tasks.get(position);
     }
+    public void deleteTask(Task task){
+        mTaskList.remove(task);
+        if (task.isDone())
+            doneTasks.remove(task);
+    }
+    public void editTask(Task task, String title, String description, Date date, boolean done){
+        task.setTitle(title);
+        task.setDescribtion(description);
+        task.setDate(date);
+        task.setDone(done);
+        mTaskList.add(task);
+        if (task.isDone())
+            doneTasks.add(task);
+        mHashMap.put(task.getId(),task);
+    }
+    public void doneTask(Task task){
+        for (int i = 0; i < mTaskList.size() ; i++) {
+            if (mTaskList.get(i) == task) {
+                mTaskList.get(i).setDone(true);
+                doneTasks.add(mTaskList.get(i));
+                break;
+            }
+        }
 
+    }
 }

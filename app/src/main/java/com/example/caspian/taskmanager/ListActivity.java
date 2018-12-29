@@ -41,7 +41,7 @@ public class ListActivity extends AppCompatActivity {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(TaskActivity.newIntent(ListActivity.this));
+                startActivity(TaskActivity.newIntent(ListActivity.this, null));
 
             }
         });

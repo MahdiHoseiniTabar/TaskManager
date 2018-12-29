@@ -96,7 +96,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                 getActivity().finish();
                 break;
             case R.id.delete:
-                MyDialogFragment mMyDialogFragment = MyDialogFragment.newInstance((UUID) getArguments().getSerializable(ID));
+                mMyDialogFragment = MyDialogFragment.newInstance((UUID) getArguments().getSerializable(ID));
                 mMyDialogFragment.show(getFragmentManager(),"Dialog");
                 break;
         }

@@ -91,6 +91,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.edit:
                 startActivity(TaskActivity.newIntent(getActivity(), (UUID) getArguments().getSerializable(ID)));
+                getActivity().finish();
                 break;
             case R.id.delete:
                 mTaskLab.deleteTask(mTask);

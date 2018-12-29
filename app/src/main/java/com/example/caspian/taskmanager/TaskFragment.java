@@ -30,7 +30,7 @@ public class TaskFragment extends Fragment {
     private CheckBox chkbx_done;
     private Button btn_save;
     private Button btn_edit;
-
+    private Task task;
     private TaskLab mTaskLab;
     private String title;
     private String describtion;
@@ -56,6 +56,7 @@ public class TaskFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mTaskLab = TaskLab.getmInstance();
+        task = mTaskLab.getTask((UUID) getArguments().getSerializable(ID));
 
 
     }
@@ -75,6 +76,9 @@ public class TaskFragment extends Fragment {
         }
         if (getArguments().getSerializable(ID) != null){
             btn_save.setEnabled(false);
+            ed_title.setText(task.getTitle());
+            ed_Describtion.setText(task.getDescribtion());
+            chkbx_done.setChecked(task.isDone());
         }
         date = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK).getTime();
         btn_save.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +95,7 @@ public class TaskFragment extends Fragment {
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Task task = mTaskLab.getTask((UUID) getArguments().getSerializable(ID));
+
                 title = ed_title.getText().toString();
                 describtion = ed_Describtion.getText().toString();
                 done = chkbx_done.isChecked();

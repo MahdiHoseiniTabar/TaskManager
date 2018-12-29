@@ -55,14 +55,17 @@ public class TaskLab {
             mDoneTaskList.remove(task);
     }
     public void editTask(Task task, String title, String description, Date date, boolean done){
-        task.setTitle(title);
-        task.setDescribtion(description);
-        task.setDate(date);
-        task.setDone(done);
-        mTaskList.add(task);
-        if (task.isDone())
-            mDoneTaskList.add(task);
-        mHashMap.put(task.getId(),task);
+        mTaskList.remove(task);
+        mDoneTaskList.remove(task);
+        Task newtask = new Task();
+        newtask.setTitle(title);
+       newtask.setDescribtion(description);
+        newtask.setDate(date);
+        newtask.setDone(done);
+        mTaskList.add(newtask);
+        if (newtask.isDone())
+            mDoneTaskList.add(newtask);
+        mHashMap.put(newtask.getId(),newtask);
     }
     public void doneTask(Task task){
         for (int i = 0; i < mTaskList.size() ; i++) {

@@ -55,7 +55,6 @@ public class DetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         test = view.findViewById(R.id.test);
         test.setText(mTask.getTitle());
-
         return view;
     }
 

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,5 +65,14 @@ public class ListFragmentDone extends Fragment {
         mRecyclerView.setAdapter(mTaskAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mTaskAdapter == null)
+            mTaskAdapter = new TaskAdapter(mTaskListDone, getActivity());
+        mRecyclerView.setAdapter(mTaskAdapter);
+        Log.i("Res", "onResume: done");
     }
 }

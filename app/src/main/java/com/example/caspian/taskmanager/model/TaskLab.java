@@ -32,6 +32,8 @@ public class TaskLab {
         task.setDate(date);
         task.setDone(done);
         mTaskList.add(task);
+        if (task.isDone())
+            doneTasks.add(task);
         mHashMap.put(task.getId(),task);
     }
 
@@ -40,11 +42,6 @@ public class TaskLab {
     }
 
     public static List<Task> getDoneTasks(){
-
-        for (int i = 0; i < mTaskList.size() ; i++) {
-            if (mTaskList.get(i).isDone())
-                doneTasks.add(mTaskList.get(i));
-        }
         return doneTasks;
     }
 

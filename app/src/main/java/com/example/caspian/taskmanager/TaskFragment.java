@@ -4,19 +4,13 @@ package com.example.caspian.taskmanager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 
-import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
 
 import java.util.Calendar;
@@ -77,7 +71,6 @@ public class TaskFragment extends Fragment {
                 describtion = ed_Describtion.getText().toString();
                 done = chkbx_done.isChecked();
                 mTaskLab.addTask(title,describtion,date,done);
-                startActivity(ListActivity.newIntent(getActivity()));
                 getActivity().finish();
 
             }

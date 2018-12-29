@@ -1,9 +1,7 @@
 package com.example.caspian.taskmanager;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,15 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.caspian.taskmanager.Adapter.TaskAdapter;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
 
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -51,7 +46,7 @@ public class ListFragmentDone extends Fragment {
         super.onCreate(savedInstanceState);
 
         mTaskLab = TaskLab.getmInstance();
-        mTaskListDone = mTaskLab.getDoneTasks();
+        mTaskListDone = mTaskLab.getDoneTaskList();
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.example.caspian.taskmanager.model;
 
-import android.os.Bundle;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,7 +11,7 @@ import java.util.UUID;
 public class TaskLab {
     private static TaskLab mInstance;
     private static List<Task> mTaskList = new ArrayList<>();
-    private static List<Task> doneTasks = new ArrayList<>();
+    private static List<Task> mDoneTaskList = new ArrayList<>();
     private static HashMap<UUID,Task> mHashMap = new LinkedHashMap<>();
 
     public static TaskLab getmInstance() {
@@ -33,7 +31,7 @@ public class TaskLab {
         task.setDone(done);
         mTaskList.add(task);
         if (task.isDone())
-            doneTasks.add(task);
+            mDoneTaskList.add(task);
         mHashMap.put(task.getId(),task);
     }
 
@@ -41,8 +39,8 @@ public class TaskLab {
         return mTaskList;
     }
 
-    public static List<Task> getDoneTasks(){
-        return doneTasks;
+    public static List<Task> getDoneTaskList(){
+        return mDoneTaskList;
     }
 
     public Task getTask(UUID id){
@@ -54,7 +52,7 @@ public class TaskLab {
     public void deleteTask(Task task){
         mTaskList.remove(task);
         if (task.isDone())
-            doneTasks.remove(task);
+            mDoneTaskList.remove(task);
     }
     public void editTask(Task task, String title, String description, Date date, boolean done){
         task.setTitle(title);
@@ -63,14 +61,14 @@ public class TaskLab {
         task.setDone(done);
         mTaskList.add(task);
         if (task.isDone())
-            doneTasks.add(task);
+            mDoneTaskList.add(task);
         mHashMap.put(task.getId(),task);
     }
     public void doneTask(Task task){
         for (int i = 0; i < mTaskList.size() ; i++) {
             if (mTaskList.get(i) == task) {
                 mTaskList.get(i).setDone(true);
-                doneTasks.add(mTaskList.get(i));
+                mDoneTaskList.add(mTaskList.get(i));
                 break;
             }
         }

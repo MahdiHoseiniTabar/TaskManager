@@ -80,7 +80,10 @@ public class TaskFragment extends Fragment {
             ed_Describtion.setText(task.getDescribtion());
             chkbx_done.setChecked(task.isDone());
         }
-        date = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK).getTime();
+        Calendar calendar = Calendar.getInstance();
+
+        date = calendar.getTime();
+
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

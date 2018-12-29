@@ -30,6 +30,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
 
     private Task mTask;
     private TaskLab mTaskLab;
+    private MyDialogFragment mMyDialogFragment;
 
     public static DetailFragment newInstance(UUID id) {
 
@@ -69,7 +70,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         imgbtn_edit = view.findViewById(R.id.edit);
 
         txt_title.setText(mTask.getTitle());
-        txt_date.setText(mTask.getDate().toString());
+        txt_date.setText(mTask.dateToString());
         txt_discribtion.setText(mTask.getDescribtion());
 
         if (mTask.isDone())
@@ -83,6 +84,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.done_imageButton:
@@ -94,8 +96,8 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                 getActivity().finish();
                 break;
             case R.id.delete:
-                MyDialogFragment myDialogFragment = MyDialogFragment.newInstance((UUID) getArguments().getSerializable(ID));
-                myDialogFragment.show(getFragmentManager(),"Dialog");
+                MyDialogFragment mMyDialogFragment = MyDialogFragment.newInstance((UUID) getArguments().getSerializable(ID));
+                mMyDialogFragment.show(getFragmentManager(),"Dialog");
                 break;
         }
     }
@@ -104,7 +106,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         txt_title.setText(mTask.getTitle());
-        txt_date.setText(mTask.getDate().toString());
+        txt_date.setText(mTask.dateToString());
         txt_discribtion.setText(mTask.getDescribtion());
     }
 }

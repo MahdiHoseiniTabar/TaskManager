@@ -1,5 +1,6 @@
 package com.example.caspian.taskmanager.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ public class Task {
 
     public Task(){
         mId = UUID.randomUUID();
+        mDate = new Date();
     }
 
     public String getTitle() {
@@ -61,5 +63,9 @@ public class Task {
 
     public void setId(UUID id) {
         mId = id;
+    }
+    public String dateToString(){
+        SimpleDateFormat df = new SimpleDateFormat("EEE , dd/MM/yyyy , HH:mm:ss a");
+        return df.format(mDate);
     }
 }

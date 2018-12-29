@@ -71,7 +71,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Taskholder> {
             mCircleImageView.setCircleBackgroundColor(Color.BLACK);
             icon.setText(task.getTitle());
             title.setText(task.getTitle());
-            date.setText(task.getDate().toString());
+            date.setText(task.dateToString());
 
             root.setOnClickListener(new View.OnClickListener() {
                 @Override

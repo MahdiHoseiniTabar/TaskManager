@@ -9,7 +9,7 @@ public class Task {
     private String mDescribtion;
     private char mIconName;
     private Date mDate;
-    private boolean mDone = false;
+    private boolean mDone;
 
     public Task(){
         mId = UUID.randomUUID();

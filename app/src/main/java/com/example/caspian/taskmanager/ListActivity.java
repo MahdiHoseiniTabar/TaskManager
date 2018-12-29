@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,8 +16,6 @@ import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
 
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ListActivity extends AppCompatActivity {
     private TabLayout mTabLayout;

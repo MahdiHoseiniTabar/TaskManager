@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.caspian.taskmanager.DetailActivity;
+import com.example.caspian.taskmanager.ListFragmentAll;
 import com.example.caspian.taskmanager.R;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
@@ -42,7 +43,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Taskholder> {
 
     @Override
     public void onBindViewHolder(@NonNull Taskholder holder, int position) {
-        Task task = mTaskLab.getTask(position);
+        Task task = mTaskLab.getTask(position,mTaskList);
         holder.bind(task);
 
     }

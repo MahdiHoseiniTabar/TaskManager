@@ -13,6 +13,7 @@ import java.util.UUID;
 public class TaskLab {
     private static TaskLab mInstance;
     private static List<Task> mTaskList = new ArrayList<>();
+    private static List<Task> doneTasks = new ArrayList<>();
     private static HashMap<UUID,Task> mHashMap = new LinkedHashMap<>();
 
     public static TaskLab getmInstance() {
@@ -38,8 +39,8 @@ public class TaskLab {
         return mTaskList;
     }
 
-    public List<Task> getDoneTasks(){
-        List<Task> doneTasks = new ArrayList<>();
+    public static List<Task> getDoneTasks(){
+
         for (int i = 0; i < mTaskList.size() ; i++) {
             if (mTaskList.get(i).isDone())
                 doneTasks.add(mTaskList.get(i));
@@ -50,8 +51,8 @@ public class TaskLab {
     public Task getTask(UUID id){
         return mHashMap.get(id);
     }
-    public Task getTask(int position){
-        return mTaskList.get(position);
+    public Task getTask(int position, List<Task> tasks){
+        return tasks.get(position);
     }
 
 }

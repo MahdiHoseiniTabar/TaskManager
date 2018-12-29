@@ -67,8 +67,4 @@ public class ListFragmentAll extends Fragment {
 
         return view;
     }
-
-
-
-
 }

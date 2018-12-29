@@ -66,13 +66,7 @@ public class TaskFragment extends Fragment {
 
 
 
-        chkbx_done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                done = isChecked;
-                Log.i(">=", "onCheckedChanged: " + done);
-            }
-        });
+
         date = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK).getTime();
 
 
@@ -81,9 +75,10 @@ public class TaskFragment extends Fragment {
             public void onClick(View v) {
                 title = ed_title.getText().toString();
                 describtion = ed_Describtion.getText().toString();
+                done = chkbx_done.isChecked();
                 mTaskLab.addTask(title,describtion,date,done);
-                onDestroy();
                 startActivity(ListActivity.newIntent(getActivity()));
+                getActivity().finish();
 
             }
         });

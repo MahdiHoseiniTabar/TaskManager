@@ -33,6 +33,7 @@ public class ListFragmentAll extends Fragment {
     private List<Task> mTaskList;
 
 
+
     public static ListFragmentAll newInstance() {
 
         Bundle args = new Bundle();
@@ -57,6 +58,7 @@ public class ListFragmentAll extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_list_all, container, false);
 
         mRecyclerView = view.findViewById(R.id.recycler_all);

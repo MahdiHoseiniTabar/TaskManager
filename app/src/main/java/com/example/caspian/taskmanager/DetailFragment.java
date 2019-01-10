@@ -4,6 +4,7 @@ package com.example.caspian.taskmanager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         imgbtn_done = view.findViewById(R.id.done_imageButton);
         imgbtn_delete = view.findViewById(R.id.delete);
         imgbtn_edit = view.findViewById(R.id.edit);
-
+        Log.i("***", "onCreateView: " + mTask.getTitle());
         txt_title.setText(mTask.getTitle());
         txt_date.setText(mTask.dateToString());
         txt_discribtion.setText(mTask.getDescribtion());

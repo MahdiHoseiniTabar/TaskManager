@@ -52,6 +52,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Taskholder> {
         return mTaskList.size();
     }
 
+
+
     public class Taskholder extends RecyclerView.ViewHolder{
         public RelativeLayout root;
         private CircleImageView mCircleImageView;

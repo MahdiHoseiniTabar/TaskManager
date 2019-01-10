@@ -51,7 +51,7 @@ public class ListFragmentAll extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mTaskLab = TaskLab.getmInstance();
+        mTaskLab = TaskLab.getmInstance(getActivity());
         mTaskList = mTaskLab.getTaskList();
     }
 

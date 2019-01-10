@@ -53,7 +53,7 @@ public class MyDialogFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTaskLab = TaskLab.getmInstance();
+        mTaskLab = TaskLab.getmInstance(getActivity());
         mTask = mTaskLab.getTask((UUID) getArguments().getSerializable(ID));
     }
 

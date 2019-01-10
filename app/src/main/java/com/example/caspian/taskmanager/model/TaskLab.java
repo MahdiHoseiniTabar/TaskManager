@@ -2,10 +2,12 @@ package com.example.caspian.taskmanager.model;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.caspian.taskmanager.database.TaskBaseHelper;
+import com.example.caspian.taskmanager.database.TaskCursorWraper;
 import com.example.caspian.taskmanager.database.TaskDbSchema;
 
 import java.text.SimpleDateFormat;
@@ -21,10 +23,10 @@ public class TaskLab {
     private static TaskLab mInstance;
     private static List<Task> mTaskList = new ArrayList<>();
     private static List<Task> mDoneTaskList = new ArrayList<>();
-    private static HashMap<UUID, Task> mHashMap = new LinkedHashMap<>();
-    private SQLiteDatabase mDatabase;
+    /*private static HashMap<UUID, Task> mHashMap = new LinkedHashMap<>();*/
+    private static SQLiteDatabase mDatabase;
     private Context mContext;
-    private UUID mAccountId;
+    private static Task task = new Task();
 
 
     public static TaskLab getmInstance(Context context) {
@@ -34,7 +36,6 @@ public class TaskLab {
     }
 
     private TaskLab(Context context) {
-
         mContext = context;
         mDatabase = new TaskBaseHelper(mContext).getWritableDatabase();
     }
@@ -67,7 +68,22 @@ public class TaskLab {
     }
 
     public static List<Task> getTaskList() {
-        return mTaskList;
+        List<Task> taskList = new ArrayList<>();
+        Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.ACCOUNTID
+                + " = ? ", new String[]{task.getMaccountId().toString()},null, null, null );
+        TaskCursorWraper cursorWraper = new TaskCursorWraper(cursor);
+        try {
+            if (cursorWraper.getCount() == 0)
+                return taskList;
+            cursorWraper.moveToFirst();
+            while (!cursorWraper.isAfterLast()) {
+                taskList.add(cursorWraper.getTask());
+                cursorWraper.moveToNext();
+            }
+        } finally {
+            cursorWraper.close();
+        }
+        return taskList;
     }
 
     public static List<Task> getDoneTaskList() {
@@ -75,7 +91,18 @@ public class TaskLab {
     }
 
     public Task getTask(UUID id) {
-        return mHashMap.get(id);
+        /*return mHashMap.get(id);*/
+        Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.UUID + " = ? ",
+                new String[]{id.toString()}, null,null,null);
+        TaskCursorWraper cursorWraper = new TaskCursorWraper(cursor);
+        try{
+            if (cursorWraper.getCount() == 0)
+                return null;
+            cursorWraper.moveToFirst();
+            return cursorWraper.getTask();
+        }finally {
+            cursorWraper.close();
+        }
     }
 
     public Task getTask(int position, List<Task> tasks) {
@@ -94,7 +121,9 @@ public class TaskLab {
         mTaskList.add(newTask);
         if (newTask.isDone())
             mDoneTaskList.add(newTask);
+/*
         mHashMap.put(newTask.getId(), newTask);
+*/
     }
 
     public void doneTask(Task task) {

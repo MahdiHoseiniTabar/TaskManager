@@ -61,7 +61,8 @@ public class TaskFragment extends Fragment {
 
 
         mTaskLab = TaskLab.getmInstance(getActivity());
-        task = mTaskLab.getTask((UUID) getArguments().getSerializable(ID));
+        if (getArguments().getSerializable(ID) != null)
+            task = mTaskLab.getTask((UUID) getArguments().getSerializable(ID));
 
 
     }
@@ -82,7 +83,7 @@ public class TaskFragment extends Fragment {
         if (getArguments().getSerializable(ID) == null) {
             btn_edit.setEnabled(false);
         }
-        if (getArguments().getSerializable(ID) != null){
+        if (getArguments().getSerializable(ID) != null) {
             btn_save.setEnabled(false);
             ed_title.setText(task.getTitle());
             ed_Describtion.setText(task.getDescribtion());
@@ -96,8 +97,8 @@ public class TaskFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (ed_title.getText().toString().equals("")) {
-                    Toast.makeText(getActivity(),"Every Task must have a Title", Toast.LENGTH_SHORT).show();
-                }else{
+                    Toast.makeText(getActivity(), "Every Task must have a Title", Toast.LENGTH_SHORT).show();
+                } else {
 
                     title = ed_title.getText().toString();
                     describtion = ed_Describtion.getText().toString();
@@ -113,7 +114,7 @@ public class TaskFragment extends Fragment {
             public void onClick(View v) {
                 if (ed_title.getText().toString().equals("")) {
                     Toast.makeText(getActivity(), "Every Task must have a Title", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Task newTask = new Task();
                     newTask.setDone(chkbx_done.isChecked());
                     newTask.setTitle(ed_title.getText().toString());

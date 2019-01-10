@@ -13,7 +13,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.caspian.taskmanager.model.AccountLab;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
 
@@ -31,6 +33,8 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        AccountLab accountLab = AccountLab.getInstance(this);
+        Toast.makeText(this, accountLab.getUsernameOfAccount() ,Toast.LENGTH_SHORT).show();
 
         mTaskList = TaskLab.getmInstance().getTaskList();
 

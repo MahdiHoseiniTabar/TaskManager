@@ -49,6 +49,7 @@ public class SignUpFragment extends Fragment {
                 mAccount.setUsername(et_username.getText().toString());
                 mAccount.setPassword(et_password.getText().toString());
                 mAccountLab.addAccount(mAccount);
+                mAccountLab.getAccount(mAccount);
                 Toast.makeText(getActivity(), "Your Account Created!" , Toast.LENGTH_SHORT).show();
                 getFragmentManager().beginTransaction().replace(R.id.verify_container, new SignInFragment()).commit();
             }

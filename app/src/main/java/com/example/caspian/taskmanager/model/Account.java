@@ -8,8 +8,10 @@ public class Account {
     private String Password;
 
 
-    public Account(){
-        AccountId = UUID.randomUUID();
+    public Account(){ this(UUID.randomUUID());
+    }
+    public Account(UUID id){
+        AccountId = id;
     }
 
     public UUID getAccountId() {

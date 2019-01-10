@@ -23,7 +23,7 @@ public class TaskDbSchema {
             public static final String DESCRIPTION = "Description";
             public static final String DATE = "Date";
             public static final String ISDONE = "IsDone";
-            public static final String TASKID = "ID";
+            public static final String ACCOUNTID = "ID";
         }
     }
 }

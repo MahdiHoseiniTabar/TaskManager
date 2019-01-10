@@ -59,7 +59,7 @@ public class SignInFragment extends Fragment {
                     Toast.makeText(getActivity(), "Username or Password not correct",Toast.LENGTH_SHORT).show();
 
                 }else {
-                    mAccountLab.setUsername(mAccount);
+                    mAccountLab.setAccountId(mAccount);
                     startActivity(new Intent(getActivity() , ListActivity.class));
 
                 }

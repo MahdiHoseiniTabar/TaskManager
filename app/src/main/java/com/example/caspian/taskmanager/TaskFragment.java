@@ -60,7 +60,7 @@ public class TaskFragment extends Fragment {
         Log.i("***", "onCreate: ");
 
 
-        mTaskLab = TaskLab.getmInstance();
+        mTaskLab = TaskLab.getmInstance(getActivity());
         task = mTaskLab.getTask((UUID) getArguments().getSerializable(ID));
 
 

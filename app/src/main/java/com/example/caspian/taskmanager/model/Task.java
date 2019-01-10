@@ -8,14 +8,16 @@ public class Task {
     private UUID mId;
     private String mTitle;
     private String mDescribtion;
-
+    private UUID maccountId;
     private Date mDate;
     private boolean mDone;
 
     public Task(){
         mId = UUID.randomUUID();
         mDate = new Date();
+        this.maccountId = AccountLab.accountId;
     }
+
 
     public String getTitle() {
         return mTitle;
@@ -59,5 +61,13 @@ public class Task {
     public String dateToString(){
         SimpleDateFormat df = new SimpleDateFormat("EEE , dd/MM/yyyy , HH:mm:ss a");
         return df.format(mDate);
+    }
+
+    public UUID getMaccountId() {
+        return maccountId;
+    }
+
+    public void setMaccountId(UUID maccountId) {
+        this.maccountId = maccountId;
     }
 }

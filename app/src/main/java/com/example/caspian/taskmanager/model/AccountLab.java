@@ -20,7 +20,7 @@ public class AccountLab {
     private static SQLiteDatabase mDatabase;
     private Context mContext;
     private static TaskCursorWraper cursorWraper;
-    private String username;
+    public static UUID accountId;
 
     public static AccountLab getInstance(Context context) {
         if (mInstance == null)
@@ -38,12 +38,8 @@ public class AccountLab {
         mDatabase.insert(TaskDbSchema.Account.NAME, null, values);
     }
 
-    public String getUsernameOfAccount(){
-
-        return username;
-    }
-    public void setUsername(Account account){
-        username = account.getUsername();
+    public void setAccountId(Account account){
+        accountId = account.getAccountId();
     }
 
 

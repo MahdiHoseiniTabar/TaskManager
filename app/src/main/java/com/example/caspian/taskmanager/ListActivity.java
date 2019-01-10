@@ -33,10 +33,8 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        AccountLab accountLab = AccountLab.getInstance(this);
-        Toast.makeText(this, accountLab.getUsernameOfAccount() ,Toast.LENGTH_SHORT).show();
 
-        mTaskList = TaskLab.getmInstance().getTaskList();
+        mTaskList = TaskLab.getmInstance(this).getTaskList();
 
         image = findViewById(R.id.image);
         image.setImageResource(R.drawable.task);

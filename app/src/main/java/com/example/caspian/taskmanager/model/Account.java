@@ -5,21 +5,18 @@ import java.util.UUID;
 public class Account {
     private UUID AccountId;
     private String Username;
-    private long Password;
-    private UUID TaskId;
+    private String Password;
+
 
     public Account(){
         AccountId = UUID.randomUUID();
-        TaskId = UUID.randomUUID();
     }
 
     public UUID getAccountId() {
         return AccountId;
     }
 
-    public void setAccountId(UUID accountId) {
-        AccountId = accountId;
-    }
+
 
     public String getUsername() {
         return Username;
@@ -29,19 +26,13 @@ public class Account {
         Username = username;
     }
 
-    public long getPassword() {
+    public String getPassword() {
         return Password;
     }
 
-    public void setPassword(long pasword) {
+    public void setPassword(String pasword) {
         Password = pasword;
     }
 
-    public UUID getTaskId() {
-        return TaskId;
-    }
 
-    public void setTaskId(UUID taskId) {
-        TaskId = taskId;
-    }
 }

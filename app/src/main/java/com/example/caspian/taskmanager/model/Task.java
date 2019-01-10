@@ -13,7 +13,10 @@ public class Task {
     private boolean mDone;
 
     public Task(){
-        mId = UUID.randomUUID();
+        this(UUID.randomUUID());
+    }
+    public Task(UUID id){
+        mId = id;
         mDate = new Date();
         this.maccountId = AccountLab.accountId;
     }

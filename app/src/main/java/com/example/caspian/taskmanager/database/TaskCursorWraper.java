@@ -4,7 +4,9 @@ import android.database.Cursor;
 import android.database.CursorWrapper;
 
 import com.example.caspian.taskmanager.model.Account;
+import com.example.caspian.taskmanager.model.Task;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class TaskCursorWraper extends CursorWrapper {
@@ -24,5 +26,20 @@ public class TaskCursorWraper extends CursorWrapper {
         account.setUsername(username);
         account.setPassword(password);
         return account;
+    }
+    public Task getTask(){
+        UUID id = UUID.fromString(getString(getColumnIndex(TaskDbSchema.Task.TaskCols.UUID)));
+        String title = getString(getColumnIndex(TaskDbSchema.Task.TaskCols.TITLE));
+        String description = getString(getColumnIndex(TaskDbSchema.Task.TaskCols.DESCRIPTION));
+        Date date =new Date(getLong(getColumnIndex(TaskDbSchema.Task.TaskCols.DATE)));
+        boolean isDone = getInt(getColumnIndex(TaskDbSchema.Task.TaskCols.ISDONE)) != 0;
+
+        Task task = new Task(id);
+        task.setTitle(title);
+        task.setDone(isDone);
+        task.setDescribtion(description);
+        task.setDate(date);
+
+        return task;
     }
 }

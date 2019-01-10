@@ -8,7 +8,7 @@ public class Task {
     private UUID mId;
     private String mTitle;
     private String mDescribtion;
-    private char mIconName;
+
     private Date mDate;
     private boolean mDone;
 
@@ -31,14 +31,6 @@ public class Task {
 
     public void setDescribtion(String describtion) {
         mDescribtion = describtion;
-    }
-
-    public char getIconName() {
-        return mIconName;
-    }
-
-    public void setIconName(char iconName) {
-        mIconName = iconName;
     }
 
     public Date getDate() {

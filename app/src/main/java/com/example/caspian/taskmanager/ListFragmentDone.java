@@ -66,8 +66,8 @@ public class ListFragmentDone extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (mTaskAdapter == null)
-            mTaskAdapter = new TaskAdapter(mTaskListDone, getActivity());
+        mTaskListDone = mTaskLab.getDoneTaskList();
+        mTaskAdapter = new TaskAdapter(mTaskListDone, getActivity());
         mRecyclerView.setAdapter(mTaskAdapter);
         Log.i("Res", "onResume: done");
     }

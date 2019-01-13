@@ -20,7 +20,7 @@ public class AccountLab {
     private static SQLiteDatabase mDatabase;
     private Context mContext;
     private static TaskCursorWraper cursorWraper;
-    public static UUID accountId;
+    public static Integer accountId;
 
     public static AccountLab getInstance(Context context) {
         if (mInstance == null)
@@ -50,9 +50,11 @@ public class AccountLab {
     }
 
     public void setAccountId(Account account) {
-        /*Cursor cursor = mDatabase.query(TaskDbSchema.Account.NAME, new String[]{"_id"},TaskDbSchema.Account.AccountCols.USERNAME + " = ? ",
-                new String[]{account.getUsername()},null, null, null);*/
-        accountId = account.getAccountId();
+        Cursor cursor = mDatabase.query(TaskDbSchema.Account.NAME, new String[]{"_id"},TaskDbSchema.Account.AccountCols.USERNAME + " = ? ",
+                new String[]{account.getUsername()},null, null, null);
+        cursor.moveToFirst();
+        accountId = cursor.getInt(cursor.getColumnIndex("_id"));
+        cursor.close();
     }
 
 

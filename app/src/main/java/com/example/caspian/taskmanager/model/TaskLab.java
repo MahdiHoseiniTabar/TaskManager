@@ -21,8 +21,9 @@ import java.util.UUID;
 //singleton Repository
 public class TaskLab {
     private static TaskLab mInstance;
-    private static List<Task> mTaskList = new ArrayList<>();
-    private static List<Task> mDoneTaskList = new ArrayList<>();
+    //private static List<Task> mTaskList = new ArrayList<>();
+    private static List<Task> mTaskList;
+    private static List<Task> mDoneTaskList;
     /*private static HashMap<UUID, Task> mHashMap = new LinkedHashMap<>();*/
     private static SQLiteDatabase mDatabase;
     private Context mContext;
@@ -56,7 +57,8 @@ public class TaskLab {
     }
     public boolean taskIsExist(Task task){
         Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.TITLE + " = ? "
-        ,new String[]{task.getTitle()},null,null,null);
+        +" AND "  +TaskDbSchema.Task.TaskCols.ACCOUNTID+ " = ? ",new String[]{task.getTitle(),AccountLab.accountId.toString()},
+                null,null,null);
         cursorWraper = new TaskCursorWraper(cursor);
         try {
             return cursorWraper.getCount() != 0;
@@ -78,27 +80,32 @@ public class TaskLab {
     }
 
     public static List<Task> getTaskList() {
-        List<Task> taskList = new ArrayList<>();
+        mTaskList = new ArrayList<>();
         /*Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.ACCOUNTID
                 + " = ? ", new String[]{task.getMaccountId().toString()},null, null, null );*/
         Cursor cursor = mDatabase.rawQuery("SELECT * from " + TaskDbSchema.Task.NAME + " WHERE " + TaskDbSchema.Task.TaskCols.ACCOUNTID
-        + " = ? " ,new String[]{/*task.getMaccountId().toString()*/});
+        + " = ? " ,new String[]{AccountLab.accountId.toString()});
         cursorWraper = new TaskCursorWraper(cursor);
         try {
             if (cursorWraper.getCount() == 0)
-                return taskList;
+                return mTaskList;
             cursorWraper.moveToFirst();
             while (!cursorWraper.isAfterLast()) {
-                taskList.add(cursorWraper.getTask());
+                mTaskList.add(cursorWraper.getTask());
                 cursorWraper.moveToNext();
             }
         } finally {
             cursorWraper.close();
         }
-        return taskList;
+        return mTaskList;
     }
 
     public static List<Task> getDoneTaskList() {
+        mDoneTaskList = new ArrayList<>();
+        for (int i = 0; i < mTaskList.size() ; i++) {
+            if (mTaskList.get(i).isDone())
+                mDoneTaskList.add(mTaskList.get(i));
+        }
         return mDoneTaskList;
     }
 
@@ -122,15 +129,15 @@ public class TaskLab {
     }
 
     public void deleteTask(Task task) {
-        mTaskList.remove(task);
+       // mTaskList.remove(task);
         if (task.isDone())
             mDoneTaskList.remove(task);
     }
 
     public void editTask(Task newTask, Task oldTask) {
-        mTaskList.remove(oldTask);
+     //   mTaskList.remove(oldTask);
         mDoneTaskList.remove(oldTask);
-        mTaskList.add(newTask);
+      //  mTaskList.add(newTask);
         if (newTask.isDone())
             mDoneTaskList.add(newTask);
 /*

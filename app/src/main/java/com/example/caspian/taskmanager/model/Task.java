@@ -8,7 +8,7 @@ public class Task {
     private UUID mId;
     private String mTitle;
     private String mDescribtion;
-    private UUID maccountId;
+    private Integer maccountId;
     private Date mDate;
     private boolean mDone;
 
@@ -66,11 +66,11 @@ public class Task {
         return df.format(mDate);
     }
 
-    public UUID getMaccountId() {
+    public Integer getMaccountId() {
         return maccountId;
     }
 
-    public void setMaccountId(UUID maccountId) {
+    public void setMaccountId(Integer maccountId) {
         this.maccountId = maccountId;
     }
 }

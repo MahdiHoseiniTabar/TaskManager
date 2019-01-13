@@ -118,6 +118,7 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        mTaskList = TaskLab.getmInstance(this).getTaskList();
         if (mTaskList.size() != 0)
             image.setVisibility(View.INVISIBLE);
         if (mTaskList.size() == 0) {

@@ -50,7 +50,7 @@ public class ListFragmentAll extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.i("alll", "onCreate: ");
         mTaskLab = TaskLab.getmInstance(getActivity());
         mTaskList = mTaskLab.getTaskList();
     }
@@ -73,9 +73,11 @@ public class ListFragmentAll extends Fragment {
 
     @Override
     public void onResume() {
-        Log.i("Res", "onResume: All");
+        Log.i("Resume", "onResume: All");
         super.onResume();
-        if (mTaskAdapter == null)
+
+        mTaskList = mTaskLab.getTaskList();
+
             mTaskAdapter = new TaskAdapter(mTaskList,getActivity());
         mRecyclerView.setAdapter(mTaskAdapter);
     }

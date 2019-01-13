@@ -108,7 +108,6 @@ public class TaskFragment extends Fragment {
                     task.setDate(date);
                     task.setDone(done);
                     if (mTaskLab.taskIsExist(task))
-
                         Toast.makeText(getActivity(), "This task already existed", Toast.LENGTH_SHORT).show();
                     else {
                         mTaskLab.addTask(task);

@@ -135,14 +135,14 @@ public class TaskLab {
     }
 
     public void editTask(Task newTask, Task oldTask) {
-     //   mTaskList.remove(oldTask);
+       /* mTaskList.remove(oldTask);
         mDoneTaskList.remove(oldTask);
-      //  mTaskList.add(newTask);
+       mTaskList.add(newTask);
         if (newTask.isDone())
             mDoneTaskList.add(newTask);
-/*
-        mHashMap.put(newTask.getId(), newTask);
-*/
+        mHashMap.put(newTask.getId(), newTask);*/
+        mDatabase.update(TaskDbSchema.Task.NAME, getContentValues(newTask),TaskDbSchema.Task.TaskCols.UUID + " = ? "
+        , new String[]{oldTask.getId().toString()});
     }
 
     public void doneTask(Task task) {

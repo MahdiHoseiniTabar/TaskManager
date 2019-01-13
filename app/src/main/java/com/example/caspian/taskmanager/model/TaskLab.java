@@ -55,14 +55,15 @@ public class TaskLab {
         mDatabase.insert(TaskDbSchema.Task.NAME, null, values);
 
     }
-    public boolean taskIsExist(Task task){
+
+    public boolean taskIsExist(Task task) {
         Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.TITLE + " = ? "
-        +" AND "  +TaskDbSchema.Task.TaskCols.ACCOUNTID+ " = ? ",new String[]{task.getTitle(),AccountLab.accountId.toString()},
-                null,null,null);
+                        + " AND " + TaskDbSchema.Task.TaskCols.ACCOUNTID + " = ? ", new String[]{task.getTitle(), AccountLab.accountId.toString()},
+                null, null, null);
         cursorWraper = new TaskCursorWraper(cursor);
         try {
             return cursorWraper.getCount() != 0;
-        }finally {
+        } finally {
             cursorWraper.close();
         }
 
@@ -75,7 +76,7 @@ public class TaskLab {
         values.put(TaskDbSchema.Task.TaskCols.DESCRIPTION, task.getDescribtion());
         values.put(TaskDbSchema.Task.TaskCols.DATE, task.getDate().toString());
         values.put(TaskDbSchema.Task.TaskCols.ISDONE, task.isDone() ? 1 : 0);
-        values.put(TaskDbSchema.Task.TaskCols.ACCOUNTID , task.getMaccountId().toString());
+        values.put(TaskDbSchema.Task.TaskCols.ACCOUNTID, task.getMaccountId().toString());
         return values;
     }
 
@@ -84,7 +85,7 @@ public class TaskLab {
         /*Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.ACCOUNTID
                 + " = ? ", new String[]{task.getMaccountId().toString()},null, null, null );*/
         Cursor cursor = mDatabase.rawQuery("SELECT * from " + TaskDbSchema.Task.NAME + " WHERE " + TaskDbSchema.Task.TaskCols.ACCOUNTID
-        + " = ? " ,new String[]{AccountLab.accountId.toString()});
+                + " = ? ", new String[]{AccountLab.accountId.toString()});
         cursorWraper = new TaskCursorWraper(cursor);
         try {
             if (cursorWraper.getCount() == 0)
@@ -102,7 +103,7 @@ public class TaskLab {
 
     public static List<Task> getDoneTaskList() {
         mDoneTaskList = new ArrayList<>();
-        for (int i = 0; i < mTaskList.size() ; i++) {
+        for (int i = 0; i < mTaskList.size(); i++) {
             if (mTaskList.get(i).isDone())
                 mDoneTaskList.add(mTaskList.get(i));
         }
@@ -112,14 +113,14 @@ public class TaskLab {
     public Task getTask(UUID id) {
         /*return mHashMap.get(id);*/
         Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.UUID + " = ? ",
-                new String[]{id.toString()}, null,null,null);
+                new String[]{id.toString()}, null, null, null);
         TaskCursorWraper cursorWraper = new TaskCursorWraper(cursor);
-        try{
+        try {
             if (cursorWraper.getCount() == 0)
                 return null;
             cursorWraper.moveToFirst();
             return cursorWraper.getTask();
-        }finally {
+        } finally {
             cursorWraper.close();
         }
     }
@@ -129,9 +130,11 @@ public class TaskLab {
     }
 
     public void deleteTask(Task task) {
-       // mTaskList.remove(task);
+        /*mTaskList.remove(task);
         if (task.isDone())
-            mDoneTaskList.remove(task);
+            mDoneTaskList.remove(task);*/
+        mDatabase.delete(TaskDbSchema.Task.NAME, TaskDbSchema.Task.TaskCols.UUID + " = ? "
+        , new String[]{task.getId().toString()});
     }
 
     public void editTask(Task newTask, Task oldTask) {
@@ -141,11 +144,18 @@ public class TaskLab {
         if (newTask.isDone())
             mDoneTaskList.add(newTask);
         mHashMap.put(newTask.getId(), newTask);*/
-        mDatabase.update(TaskDbSchema.Task.NAME, getContentValues(newTask),TaskDbSchema.Task.TaskCols.UUID + " = ? "
-        , new String[]{oldTask.getId().toString()});
+        mDatabase.update(TaskDbSchema.Task.NAME, getContentValues(newTask), TaskDbSchema.Task.TaskCols.UUID + " = ? "
+                , new String[]{oldTask.getId().toString()});
     }
 
-    public void doneTask(Task task) {
+    public void doneTask(Task newTask, Task oldTask) {
+        newTask.setTitle(oldTask.getTitle());
+        newTask.setDescribtion(oldTask.getDescribtion());
+        newTask.setDate(oldTask.getDate());
+        newTask.setId(oldTask.getId());
+        newTask.setDone(true);
+    }
+   /* public void doneTask(Task task) {
         for (int i = 0; i < mTaskList.size(); i++) {
             if (mTaskList.get(i) == task) {
                 mTaskList.get(i).setDone(true);
@@ -154,6 +164,6 @@ public class TaskLab {
             }
         }
 
-    }
+    }*/
 
 }

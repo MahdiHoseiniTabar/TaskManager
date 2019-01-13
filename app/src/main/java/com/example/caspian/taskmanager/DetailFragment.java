@@ -89,7 +89,9 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.done_imageButton:
-                mTaskLab.doneTask(mTask);
+                Task newTask = new Task();
+                mTaskLab.doneTask(newTask,mTask);
+                mTaskLab.editTask(newTask, mTask);
                 getActivity().finish();
                 break;
             case R.id.edit:
@@ -102,6 +104,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
 
     @Override
     public void onResume() {

@@ -70,7 +70,4 @@ public class Task {
         return maccountId;
     }
 
-    public void setMaccountId(Integer maccountId) {
-        this.maccountId = maccountId;
-    }
 }

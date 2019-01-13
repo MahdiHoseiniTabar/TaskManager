@@ -37,7 +37,6 @@ public class AccountLab {
         Cursor cursor = mDatabase.query(TaskDbSchema.Account.NAME, null, TaskDbSchema.Account.AccountCols.USERNAME +
         " = ? ",new String[]{account.getUsername()}, null,null,null);
         cursorWraper = new TaskCursorWraper(cursor);
-
         try {
             return cursorWraper.getCount() != 0;
         }finally {

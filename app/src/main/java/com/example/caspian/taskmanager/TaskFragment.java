@@ -99,12 +99,21 @@ public class TaskFragment extends Fragment {
                 if (ed_title.getText().toString().equals("")) {
                     Toast.makeText(getActivity(), "Every Task must have a Title", Toast.LENGTH_SHORT).show();
                 } else {
-
+                    task = new Task();
                     title = ed_title.getText().toString();
                     describtion = ed_Describtion.getText().toString();
                     done = chkbx_done.isChecked();
-                    mTaskLab.addTask(title, describtion, date, done);
-                    getActivity().finish();
+                    task.setTitle(title);
+                    task.setDescribtion(describtion);
+                    task.setDate(date);
+                    task.setDone(done);
+                    if (mTaskLab.taskIsExist(task))
+
+                        Toast.makeText(getActivity(), "This task already existed", Toast.LENGTH_SHORT).show();
+                    else {
+                        mTaskLab.addTask(task);
+                        getActivity().finish();
+                    }
                 }
 
             }

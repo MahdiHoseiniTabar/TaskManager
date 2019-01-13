@@ -26,7 +26,7 @@ public class TaskLab {
     /*private static HashMap<UUID, Task> mHashMap = new LinkedHashMap<>();*/
     private static SQLiteDatabase mDatabase;
     private Context mContext;
-    private static Task task = new Task();
+    private static TaskCursorWraper cursorWraper;
 
 
     public static TaskLab getmInstance(Context context) {
@@ -40,7 +40,7 @@ public class TaskLab {
         mDatabase = new TaskBaseHelper(mContext).getWritableDatabase();
     }
 
-    public void addTask(String title, String description, Date date, boolean done) {
+    public void addTask(Task task) {
       /*  Task task = new Task();
         task.setTitle(title);
         task.setDescribtion(description);
@@ -50,13 +50,19 @@ public class TaskLab {
         if (task.isDone())
             mDoneTaskList.add(task);
         mHashMap.put(task.getId(),task);*/
-        Task task = new Task();
-        task.setTitle(title);
-        task.setDescribtion(description);
-        task.setDate(date);
-        task.setDone(done);
         ContentValues values = getContentValues(task);
         mDatabase.insert(TaskDbSchema.Task.NAME, null, values);
+
+    }
+    public boolean taskIsExist(Task task){
+        Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.TITLE + " = ? "
+        ,new String[]{task.getTitle()},null,null,null);
+        cursorWraper = new TaskCursorWraper(cursor);
+        try {
+            return cursorWraper.getCount() != 0;
+        }finally {
+            cursorWraper.close();
+        }
 
     }
 
@@ -76,8 +82,8 @@ public class TaskLab {
         /*Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.ACCOUNTID
                 + " = ? ", new String[]{task.getMaccountId().toString()},null, null, null );*/
         Cursor cursor = mDatabase.rawQuery("SELECT * from " + TaskDbSchema.Task.NAME + " WHERE " + TaskDbSchema.Task.TaskCols.ACCOUNTID
-        + " = ? " ,new String[]{task.getMaccountId().toString()});
-        TaskCursorWraper cursorWraper = new TaskCursorWraper(cursor);
+        + " = ? " ,new String[]{/*task.getMaccountId().toString()*/});
+        cursorWraper = new TaskCursorWraper(cursor);
         try {
             if (cursorWraper.getCount() == 0)
                 return taskList;

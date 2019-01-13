@@ -26,6 +26,8 @@ public class SignInFragment extends Fragment {
     private EditText et_username;
     private EditText et_password;
     private Button btn_signin;
+    private Button btn_guess;
+
     private TextView txt_signup;
     private Account mAccount;
     private AccountLab mAccountLab;
@@ -60,9 +62,18 @@ public class SignInFragment extends Fragment {
 
                 }else {
                     mAccountLab.setAccountId(mAccount);
-                    startActivity(new Intent(getActivity() , ListActivity.class));
+                    Account.setIsGUess(false);
+                    startActivity(ListActivity.newIntent(getActivity()));
 
                 }
+            }
+        });
+        btn_guess = view.findViewById(R.id.button_guess);
+        btn_guess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Account.setIsGUess(true);
+                startActivity(ListActivity.newIntent(getActivity()));
             }
         });
 

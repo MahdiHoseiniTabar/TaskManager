@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.caspian.taskmanager.model.Account;
 import com.example.caspian.taskmanager.model.AccountLab;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
@@ -29,10 +30,18 @@ public class ListActivity extends AppCompatActivity {
     private List<Task> mTaskList;
 
 
+    public static Intent newIntent(Context context){
+        Intent intent = new Intent(context,ListActivity.class);
+        return intent;
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+
 
         mTaskList = TaskLab.getmInstance(this).getTaskList();
 

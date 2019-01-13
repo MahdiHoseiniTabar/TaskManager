@@ -33,45 +33,61 @@ public class AccountLab {
         mDatabase = new TaskBaseHelper(mContext).getWritableDatabase();
 
     }
-    public void addAccount(Account account){
+    public boolean accountIsExist(Account account){
+        Cursor cursor = mDatabase.query(TaskDbSchema.Account.NAME, null, TaskDbSchema.Account.AccountCols.USERNAME +
+        " = ? ",new String[]{account.getUsername()}, null,null,null);
+        cursorWraper = new TaskCursorWraper(cursor);
+
+        try {
+            return cursorWraper.getCount() != 0;
+        }finally {
+            cursorWraper.close();
+        }
+    }
+
+    public void addAccount(Account account) {
         ContentValues values = getContentValue(account);
         mDatabase.insert(TaskDbSchema.Account.NAME, null, values);
     }
 
-    public void setAccountId(Account account){
+    public void setAccountId(Account account) {
+        /*Cursor cursor = mDatabase.query(TaskDbSchema.Account.NAME, new String[]{"_id"},TaskDbSchema.Account.AccountCols.USERNAME + " = ? ",
+                new String[]{account.getUsername()},null, null, null);*/
         accountId = account.getAccountId();
     }
 
 
-    public Account getAccount(Account account){
-        Cursor cursor = mDatabase.query(TaskDbSchema.Account.NAME , null, TaskDbSchema.Account.AccountCols.USERNAME + " = ? "
-                +" AND  "+ TaskDbSchema.Account.AccountCols.PASSWORD + " = ? "
-                ,new String[]{account.getUsername(), account.getPassword()},null,null, null);
+    public Account getAccount(Account account) {
+        Cursor cursor = mDatabase.query(TaskDbSchema.Account.NAME, null, TaskDbSchema.Account.AccountCols.USERNAME + " = ? "
+                        + " AND  " + TaskDbSchema.Account.AccountCols.PASSWORD + " = ? "
+                , new String[]{account.getUsername(), account.getPassword()}, null, null, null);
         cursorWraper = new TaskCursorWraper(cursor);
         try {
             if (cursorWraper.getCount() == 0)
                 return null;
-
             cursorWraper.moveToFirst();
             return cursorWraper.getAccount();
         } finally {
             cursorWraper.close();
         }
     }
-    public List<Account> getAccounts(){
+
+    public List<Account> getAccounts() {
         return new ArrayList<>();
     }
-    public void removeAccount(Account account){
+
+    public void removeAccount(Account account) {
 
     }
-    public void updateAccount(Account account){
+
+    public void updateAccount(Account account) {
 
     }
 
     private ContentValues getContentValue(Account account) {
         ContentValues values = new ContentValues();
-        values.put(TaskDbSchema.Account.AccountCols.UUID , account.getAccountId().toString());
-        values.put(TaskDbSchema.Account.AccountCols.USERNAME , account.getUsername());
+        values.put(TaskDbSchema.Account.AccountCols.UUID, account.getAccountId().toString());
+        values.put(TaskDbSchema.Account.AccountCols.USERNAME, account.getUsername());
         values.put(TaskDbSchema.Account.AccountCols.PASSWORD, account.getPassword());
         return values;
     }

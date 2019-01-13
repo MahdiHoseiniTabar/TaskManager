@@ -25,7 +25,9 @@ public class TaskBaseHelper extends SQLiteOpenHelper {
         + TaskDbSchema.Task.TaskCols.DESCRIPTION + ", "
         + TaskDbSchema.Task.TaskCols.DATE + ", "
         + TaskDbSchema.Task.TaskCols.ISDONE+", "
-        + TaskDbSchema.Task.TaskCols.ACCOUNTID
+        + TaskDbSchema.Task.TaskCols.ACCOUNTID +", "
+        +"foreign key ( "+ TaskDbSchema.Task.TaskCols.ACCOUNTID+" ) references "
+        + TaskDbSchema.Account.NAME + " ( " + "_id" + " ) "
         + " ) ");
 
     }

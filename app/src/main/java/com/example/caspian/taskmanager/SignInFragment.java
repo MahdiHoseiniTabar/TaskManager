@@ -38,14 +38,14 @@ public class SignInFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAccount = new Account();
-        mAccountLab = AccountLab.getInstance(getActivity());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        mAccount = new Account();
+        mAccountLab = AccountLab.getInstance(getActivity());
         View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
         et_username = view.findViewById(R.id.editText_user_signin);
         et_password = view.findViewById(R.id.editText_pass_signin);

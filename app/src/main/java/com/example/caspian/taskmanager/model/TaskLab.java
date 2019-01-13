@@ -51,6 +51,10 @@ public class TaskLab {
             mDoneTaskList.add(task);
         mHashMap.put(task.getId(),task);*/
         Task task = new Task();
+        task.setTitle(title);
+        task.setDescribtion(description);
+        task.setDate(date);
+        task.setDone(done);
         ContentValues values = getContentValues(task);
         mDatabase.insert(TaskDbSchema.Task.NAME, null, values);
 
@@ -69,8 +73,10 @@ public class TaskLab {
 
     public static List<Task> getTaskList() {
         List<Task> taskList = new ArrayList<>();
-        Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.ACCOUNTID
-                + " = ? ", new String[]{task.getMaccountId().toString()},null, null, null );
+        /*Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.ACCOUNTID
+                + " = ? ", new String[]{task.getMaccountId().toString()},null, null, null );*/
+        Cursor cursor = mDatabase.rawQuery("SELECT * from " + TaskDbSchema.Task.NAME + " WHERE " + TaskDbSchema.Task.TaskCols.ACCOUNTID
+        + " = ? " ,new String[]{task.getMaccountId().toString()});
         TaskCursorWraper cursorWraper = new TaskCursorWraper(cursor);
         try {
             if (cursorWraper.getCount() == 0)

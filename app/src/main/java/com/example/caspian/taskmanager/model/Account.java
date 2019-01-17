@@ -6,12 +6,14 @@ public class Account {
     private UUID AccountId;
     private String Username;
     private String Password;
-    private static boolean isGUess;
+    private static boolean isGUess = false;
 
 
-    public Account(){ this(UUID.randomUUID());
+    public Account() {
+        this(UUID.randomUUID());
     }
-    public Account(UUID id){
+
+    public Account(UUID id) {
         AccountId = id;
     }
 
@@ -26,7 +28,6 @@ public class Account {
     public UUID getAccountId() {
         return AccountId;
     }
-
 
 
     public String getUsername() {

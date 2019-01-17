@@ -77,7 +77,9 @@ public class AccountLab {
         return new ArrayList<>();
     }
 
-    public void removeAccount(Account account) {
+    public void removeAccount(UUID id) {
+        mDatabase.delete(TaskDbSchema.Account.NAME, TaskDbSchema.Account.AccountCols.UUID + " =  ? "
+        ,new String[]{id.toString()});
 
     }
 

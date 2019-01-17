@@ -23,17 +23,21 @@ import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ListActivity extends AppCompatActivity {
+    public static final String ACCOUNTID = "com.example.caspian.taskmanager.id";
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private FloatingActionButton mFloatingActionButton;
     private ImageView image;
     private List<Task> mTaskList;
+    private AccountLab mAccountLab;
 
 
-    public static Intent newIntent(Context context){
+    public static Intent newIntent(Context context, UUID id){
         Intent intent = new Intent(context,ListActivity.class);
+        intent.putExtra(ACCOUNTID, id);
         return intent;
     }
 
@@ -135,12 +139,11 @@ public class ListActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-       /* if (Account.isIsGUess()) {
-            for (int i = 0; i < mTaskList.size(); i++) {
-                mTaskList.remove(mTaskList.get(i));
-            }
-        }*/
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("vasaaaa", "onDestroy: "+Account.isIsGUess());
+        if (Account.isIsGUess()){
+            mAccountLab.getInstance(this).removeAccount((UUID) getIntent().getSerializableExtra(ACCOUNTID));
+        }
     }
 }

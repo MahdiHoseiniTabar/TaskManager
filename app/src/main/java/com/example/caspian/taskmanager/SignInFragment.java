@@ -29,7 +29,7 @@ public class SignInFragment extends Fragment {
     private Button btn_guess;
 
     private TextView txt_signup;
-    private Account mAccount;
+
     private AccountLab mAccountLab;
 
 
@@ -46,7 +46,7 @@ public class SignInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mAccount = new Account();
+
         mAccountLab = AccountLab.getInstance(getActivity());
         View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
         et_username = view.findViewById(R.id.editText_user_signin);
@@ -55,6 +55,7 @@ public class SignInFragment extends Fragment {
         btn_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Account mAccount = new Account();
                 mAccount.setUsername(et_username.getText().toString());
                 mAccount.setPassword(et_password.getText().toString());
                 if(mAccountLab.getAccount(mAccount) == null){
@@ -62,8 +63,8 @@ public class SignInFragment extends Fragment {
 
                 }else {
                     mAccountLab.setAccountId(mAccount);
-                    /*Account.setIsGUess(false);*/
-                    startActivity(ListActivity.newIntent(getActivity()));
+                    Account.setIsGUess(false);
+                    startActivity(ListActivity.newIntent(getActivity(), mAccount.getAccountId()));
 
                 }
             }
@@ -72,8 +73,13 @@ public class SignInFragment extends Fragment {
         btn_guess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Account.setIsGUess(true);*/
-                startActivity(ListActivity.newIntent(getActivity()));
+                Account.setIsGUess(true);
+                Account mAccount = new Account();
+                mAccount.setPassword("guess");
+                mAccount.setUsername("guess");
+                mAccountLab.addAccount(mAccount);
+                mAccountLab.setAccountId(mAccount);
+                startActivity(ListActivity.newIntent(getActivity(), mAccount.getAccountId()));
             }
         });
 

@@ -49,17 +49,21 @@ public class SignUpFragment extends Fragment {
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (et_password.getText().toString().equals("") || et_username.getText().toString().equals(""))
-                    Toast.makeText(getActivity(), "Username and Password couldn't null", Toast.LENGTH_SHORT).show();
+                if (et_password.getText().toString().equals("guess") || et_username.getText().toString().equals("guess"))
+                    Toast.makeText(getActivity(),"this Account reserved!",Toast.LENGTH_SHORT).show();
                 else {
-                    mAccount.setUsername(et_username.getText().toString());
-                    mAccount.setPassword(et_password.getText().toString());
-                    if (mAccountLab.accountIsExist(mAccount)) {
-                        Toast.makeText(getActivity(), "This username exist!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        mAccountLab.addAccount(mAccount);
-                        Toast.makeText(getActivity(), "Your Account Created!", Toast.LENGTH_SHORT).show();
-                        getFragmentManager().beginTransaction().replace(R.id.verify_container, new SignInFragment()).commit();
+                    if (et_password.getText().toString().equals("") || et_username.getText().toString().equals(""))
+                        Toast.makeText(getActivity(), "Username and Password couldn't null", Toast.LENGTH_SHORT).show();
+                    else {
+                        mAccount.setUsername(et_username.getText().toString());
+                        mAccount.setPassword(et_password.getText().toString());
+                        if (mAccountLab.accountIsExist(mAccount)) {
+                            Toast.makeText(getActivity(), "This username exist!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            mAccountLab.addAccount(mAccount);
+                            Toast.makeText(getActivity(), "Your Account Created!", Toast.LENGTH_SHORT).show();
+                            getFragmentManager().beginTransaction().replace(R.id.verify_container, new SignInFragment()).commit();
+                        }
                     }
                 }
             }

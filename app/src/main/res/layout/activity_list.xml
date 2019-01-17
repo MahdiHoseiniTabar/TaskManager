@@ -4,21 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FAFAFA"
 
-    tools:context=".ListActivity"
-    >
+    tools:context=".ListActivity">
 
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view-pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tab_layout"/>
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+         />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"

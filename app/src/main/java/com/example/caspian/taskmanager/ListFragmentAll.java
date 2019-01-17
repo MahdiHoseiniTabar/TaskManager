@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,27 +49,33 @@ public class ListFragmentAll extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mTaskLab = TaskLab.getmInstance();
+        Log.i("alll", "onCreate: ");
+        mTaskLab = TaskLab.getmInstance(getActivity());
         mTaskList = mTaskLab.getTaskList();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_list_all, container, false);
 
         mRecyclerView = view.findViewById(R.id.recycler_all);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         if (mTaskAdapter == null)
-           mTaskAdapter = new TaskAdapter(mTaskList,getActivity());
+            mTaskAdapter = new TaskAdapter(mTaskList, getActivity());
         mRecyclerView.setAdapter(mTaskAdapter);
 
         return view;
     }
 
-
-
-
+    @Override
+    public void onResume() {
+        Log.i("Resume", "onResume: All");
+        super.onResume();
+        mTaskList = mTaskLab.getTaskList();
+        mTaskAdapter = new TaskAdapter(mTaskList, getActivity());
+        mRecyclerView.setAdapter(mTaskAdapter);
+    }
 }

@@ -6,45 +6,54 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.caspian.taskmanager.model.Account;
+import com.example.caspian.taskmanager.model.AccountLab;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class ListActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private FloatingActionButton mFloatingActionButton;
-    private Task mTask;
-    private TaskLab mTaskLab;
+    private ImageView image;
     private List<Task> mTaskList;
 
+
     public static Intent newIntent(Context context){
-        Intent intent = new Intent(context, ListActivity.class);
+        Intent intent = new Intent(context,ListActivity.class);
         return intent;
     }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        mTaskList = TaskLab.getmInstance().getTaskList();
+        mTaskList = TaskLab.getmInstance(this).getTaskList();
+
+        image = findViewById(R.id.image);
+        image.setImageResource(R.drawable.task);
 
 
         mFloatingActionButton = findViewById(R.id.floatingActionButton);
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(TaskActivity.newIntent(ListActivity.this));
+                startActivity(TaskActivity.newIntent(ListActivity.this, null));
 
             }
         });
@@ -54,7 +63,7 @@ public class ListActivity extends AppCompatActivity {
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                if(position == 0)
+                if (position == 0)
                     return ListFragmentAll.newInstance();
                 else
                     return ListFragmentDone.newInstance();
@@ -68,17 +77,70 @@ public class ListActivity extends AppCompatActivity {
             @Nullable
             @Override
             public CharSequence getPageTitle(int position) {
-                switch (position){
+                switch (position) {
                     case 0:
                         return "All";
                     case 1:
-                    return "Done";
+                        return "Done";
                     default:
                         return "";
                 }
             }
         });
+
+
+            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                boolean flag = true;
+
+
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    Log.i("naaaaa", "onCreate: add" );
+                    if (!flag)
+                        image.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                    if (mTaskList.size() != 0)
+                        flag = true;
+                    else {
+                        flag = false;
+                        image.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+
         mTabLayout.setupWithViewPager(mViewPager);
 
+        if (mTaskList.size() != 0)
+            image.setVisibility(View.INVISIBLE);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mTaskList.size() != 0)
+            image.setVisibility(View.INVISIBLE);
+        if (mTaskList.size() == 0) {
+            image.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+       /* if (Account.isIsGUess()) {
+            for (int i = 0; i < mTaskList.size(); i++) {
+                mTaskList.remove(mTaskList.get(i));
+            }
+        }*/
     }
 }

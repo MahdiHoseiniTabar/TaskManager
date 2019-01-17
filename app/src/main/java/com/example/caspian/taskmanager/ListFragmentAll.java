@@ -33,7 +33,6 @@ public class ListFragmentAll extends Fragment {
     private List<Task> mTaskList;
 
 
-
     public static ListFragmentAll newInstance() {
 
         Bundle args = new Bundle();

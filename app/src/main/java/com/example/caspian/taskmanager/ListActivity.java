@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,7 +31,6 @@ public class ListActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private FloatingActionButton mFloatingActionButton;
-    private ImageView image;
     private List<Task> mTaskList;
     private AccountLab mAccountLab;
 
@@ -49,8 +49,7 @@ public class ListActivity extends AppCompatActivity {
 
         mTaskList = TaskLab.getmInstance(this).getTaskList();
 
-        image = findViewById(R.id.image);
-        image.setImageResource(R.drawable.task);
+
 
 
         mFloatingActionButton = findViewById(R.id.floatingActionButton);
@@ -64,13 +63,17 @@ public class ListActivity extends AppCompatActivity {
         mTabLayout = findViewById(R.id.tab_layout);
 
         mViewPager = findViewById(R.id.view_pager);
-        mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+        mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                if (position == 0)
-                    return ListFragmentAll.newInstance();
-                else
-                    return ListFragmentDone.newInstance();
+                if (mTaskList.size() == 0)
+                    return new TaskleesFragment();
+                else {
+                    if (position == 0)
+                        return ListFragmentAll.newInstance();
+                    else
+                        return ListFragmentDone.newInstance();
+                }
             }
 
             @Override
@@ -93,37 +96,10 @@ public class ListActivity extends AppCompatActivity {
         });
 
 
-            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                boolean flag = true;
-
-
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                    Log.i("naaaaa", "onCreate: add" );
-                    if (!flag)
-                        image.setVisibility(View.INVISIBLE);
-                }
-
-                @Override
-                public void onPageSelected(int position) {
-
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-                    if (mTaskList.size() != 0)
-                        flag = true;
-                    else {
-                        flag = false;
-                        image.setVisibility(View.VISIBLE);
-                    }
-                }
-            });
 
         mTabLayout.setupWithViewPager(mViewPager);
 
-        if (mTaskList.size() != 0)
-            image.setVisibility(View.INVISIBLE);
+
 
 
     }
@@ -131,12 +107,48 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mTaskList.size() != 0)
-            image.setVisibility(View.INVISIBLE);
-        if (mTaskList.size() == 0) {
-            image.setVisibility(View.VISIBLE);
+        mTaskList = TaskLab.getmInstance(this).getTaskList();
+        Log.i("activitylist", "onResume: " + mTaskList.size());
+
+            mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+
+                @Override
+                public Fragment getItem(int position) {
+
+                    if (mTaskList.size() == 0)
+                        return new TaskleesFragment();
+                    else {
+                        if (position == 0)
+                            return ListFragmentAll.newInstance();
+                        else
+                            return ListFragmentDone.newInstance();
+                    }
+                }
+
+                @Override
+                public int getCount() {
+                    return 2;
+                }
+
+                @Nullable
+                @Override
+                public CharSequence getPageTitle(int position) {
+                    switch (position) {
+                        case 0:
+                            return "All";
+                        case 1:
+                            return "Done";
+                        default:
+                            return "";
+                    }
+                }
+            });
+
         }
-    }
+
+
+
+
 
     @Override
     protected void onDestroy() {

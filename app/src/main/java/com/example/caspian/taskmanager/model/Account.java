@@ -27,8 +27,6 @@ public class Account {
         return AccountId;
     }
 
-
-
     public String getUsername() {
         return Username;
     }

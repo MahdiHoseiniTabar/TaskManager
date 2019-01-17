@@ -69,9 +69,7 @@ public class MyDialogFragment extends DialogFragment {
 
         txt_title.setText(mTask.getTitle());
         txt_icon.setText(mTask.getTitle());
-
         txt_date.setText(mTask.dateToString());
-
         mCircleImageView.setCircleBackgroundColor(Color.BLACK);
 
         return new AlertDialog.Builder(getActivity())

@@ -12,7 +12,6 @@
         android:id="@+id/editText_user_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:hint="username"
         android:inputType="textPersonName" />
 
@@ -20,13 +19,17 @@
         android:id="@+id/editText_pass_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        />
 
     <Button
         android:id="@+id/button_signup"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="signup" />
+        android:layout_gravity="center"
+        android:text="signup"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="4dp"
+        style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"/>
 </LinearLayout>

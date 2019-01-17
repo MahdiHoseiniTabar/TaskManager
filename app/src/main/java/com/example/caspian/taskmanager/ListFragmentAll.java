@@ -33,6 +33,7 @@ public class ListFragmentAll extends Fragment {
     private List<Task> mTaskList;
 
 
+
     public static ListFragmentAll newInstance() {
 
         Bundle args = new Bundle();
@@ -75,7 +76,7 @@ public class ListFragmentAll extends Fragment {
         Log.i("Resume", "onResume: All");
         super.onResume();
         mTaskList = mTaskLab.getTaskList();
-        mTaskAdapter = new TaskAdapter(mTaskList, getActivity());
+        mTaskAdapter = new TaskAdapter(mTaskList,getActivity());
         mRecyclerView.setAdapter(mTaskAdapter);
     }
 }

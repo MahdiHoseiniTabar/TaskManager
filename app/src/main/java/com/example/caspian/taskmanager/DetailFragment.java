@@ -69,7 +69,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         imgbtn_done = view.findViewById(R.id.done_imageButton);
         imgbtn_delete = view.findViewById(R.id.delete);
         imgbtn_edit = view.findViewById(R.id.edit);
-//        Log.i("***", "onCreateView: " + mTask.getTitle());
+
         txt_title.setText(mTask.getTitle());
         txt_date.setText(mTask.dateToString());
         txt_discribtion.setText(mTask.getDescribtion());

@@ -19,6 +19,7 @@ import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
 
 import java.util.List;
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,7 +37,6 @@ public class ListFragmentAll extends Fragment {
     public static ListFragmentAll newInstance() {
 
         Bundle args = new Bundle();
-
         ListFragmentAll fragment = new ListFragmentAll();
         fragment.setArguments(args);
         return fragment;
@@ -64,7 +64,7 @@ public class ListFragmentAll extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         if (mTaskAdapter == null)
-            mTaskAdapter = new TaskAdapter(mTaskList, getActivity());
+            mTaskAdapter = new TaskAdapter(mTaskList, getActivity(), getFragmentManager());
         mRecyclerView.setAdapter(mTaskAdapter);
 
         return view;
@@ -75,7 +75,7 @@ public class ListFragmentAll extends Fragment {
         Log.i("Resume", "onResume: All");
         super.onResume();
         mTaskList = mTaskLab.getTaskList();
-        mTaskAdapter = new TaskAdapter(mTaskList,getActivity());
+        mTaskAdapter = new TaskAdapter(mTaskList, getActivity(), getFragmentManager());
         mRecyclerView.setAdapter(mTaskAdapter);
     }
 }

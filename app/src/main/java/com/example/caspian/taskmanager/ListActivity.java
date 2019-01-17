@@ -27,7 +27,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class ListActivity extends AppCompatActivity {
-    public static final String ACCOUNTID = "com.example.caspian.taskmanager.id";
+    public static final String ACCOUNTID = "com.example.caspian.taskmanager.accId";
+    public static final String TASKID = "com.example.caspian.taskmanager.taskId";
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private FloatingActionButton mFloatingActionButton;
@@ -35,9 +36,9 @@ public class ListActivity extends AppCompatActivity {
     private AccountLab mAccountLab;
 
 
-    public static Intent newIntent(Context context, UUID id){
+    public static Intent newIntent(Context context, UUID accountId ){
         Intent intent = new Intent(context,ListActivity.class);
-        intent.putExtra(ACCOUNTID, id);
+        intent.putExtra(ACCOUNTID, accountId);
         return intent;
     }
 
@@ -110,40 +111,37 @@ public class ListActivity extends AppCompatActivity {
         mTaskList = TaskLab.getmInstance(this).getTaskList();
         Log.i("activitylist", "onResume: " + mTaskList.size());
 
-            mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-
-                @Override
-                public Fragment getItem(int position) {
-
-                    if (mTaskList.size() == 0)
-                        return new TaskleesFragment();
-                    else {
-                        if (position == 0)
-                            return ListFragmentAll.newInstance();
-                        else
-                            return ListFragmentDone.newInstance();
-                    }
+        mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                if (mTaskList.size() == 0)
+                    return new TaskleesFragment();
+                else {
+                    if (position == 0)
+                        return ListFragmentAll.newInstance();
+                    else
+                        return ListFragmentDone.newInstance();
                 }
+            }
 
-                @Override
-                public int getCount() {
-                    return 2;
+            @Override
+            public int getCount() {
+                return 2;
+            }
+
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                switch (position) {
+                    case 0:
+                        return "All";
+                    case 1:
+                        return "Done";
+                    default:
+                        return "";
                 }
-
-                @Nullable
-                @Override
-                public CharSequence getPageTitle(int position) {
-                    switch (position) {
-                        case 0:
-                            return "All";
-                        case 1:
-                            return "Done";
-                        default:
-                            return "";
-                    }
-                }
-            });
-
+            }
+        });
         }
 
 

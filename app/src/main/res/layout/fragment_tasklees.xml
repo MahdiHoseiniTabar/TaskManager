@@ -9,10 +9,9 @@
 
     <ImageView
 
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="200dp"
         android:layout_centerInParent="true"
-        android:layout_margin="8dp"
         android:src="@drawable/task"
         android:id="@+id/icon_image"
         />
@@ -23,7 +22,6 @@
         android:text="Don't have any Task?"
         android:textSize="16dp"
         android:textAlignment="center"
-        style="@style/Base.V7.Widget.AppCompat.AutoCompleteTextView"
         android:textColor="@color/colorAccent"
         />
 

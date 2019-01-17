@@ -53,5 +53,5 @@
         android:textSize="20dp"
         android:textColor="@color/colorAccent"
         android:textAlignment="center"
-        style="@style/Base.V7.Widget.AppCompat.AutoCompleteTextView"/>
+       />
 </LinearLayout>

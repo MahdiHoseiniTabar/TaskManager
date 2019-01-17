@@ -3,6 +3,7 @@ package com.example.caspian.taskmanager.Adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,11 +14,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.caspian.taskmanager.DetailActivity;
+import com.example.caspian.taskmanager.DetailDialogFragment;
+import com.example.caspian.taskmanager.DetailFragment;
+import com.example.caspian.taskmanager.MyDialogFragment;
 import com.example.caspian.taskmanager.R;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
 
 import java.util.List;
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -25,12 +30,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Taskholder> {
     private TaskLab mTaskLab;
     private List<Task> mTaskList;
     private Context mContext;
+    private FragmentManager mFragmentManager;
 
-    public TaskAdapter(List<Task> taskList, Context context){
+
+    public TaskAdapter(List<Task> taskList, Context context, FragmentManager fragmentManager){
 
         mTaskList = taskList;
         mContext = context;
+        mFragmentManager = fragmentManager;
         mTaskLab = TaskLab.getmInstance(mContext);
+
     }
 
     @NonNull
@@ -80,7 +89,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Taskholder> {
             root.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mContext.startActivity(DetailActivity.newIntent(mContext, task.getId()));
+                    /*mContext.startActivity(DetailActivity.newIntent(mContext, task.getId()));*/
+                    DetailDialogFragment detailDialogFragment = DetailDialogFragment.newInstance(task.getId());
+                    detailDialogFragment.show(mFragmentManager,"dialog");
                 }
             });
         }

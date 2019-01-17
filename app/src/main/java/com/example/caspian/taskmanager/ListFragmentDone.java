@@ -16,12 +16,14 @@ import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
 
 import java.util.List;
+import java.util.UUID;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ListFragmentDone extends Fragment {
+    public static final String TASKID = "com.example.caspian.taskmanager.taskId";
     private RecyclerView mRecyclerView;
     private TaskAdapter mTaskAdapter;
     private TaskLab mTaskLab;
@@ -35,7 +37,6 @@ public class ListFragmentDone extends Fragment {
     public static ListFragmentDone newInstance() {
 
         Bundle args = new Bundle();
-
         ListFragmentDone fragment = new ListFragmentDone();
         fragment.setArguments(args);
         return fragment;
@@ -57,7 +58,7 @@ public class ListFragmentDone extends Fragment {
         mRecyclerView = view.findViewById(R.id.recycler_done);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         if (mTaskAdapter == null)
-            mTaskAdapter = new TaskAdapter(mTaskListDone, getActivity());
+            mTaskAdapter = new TaskAdapter(mTaskListDone, getActivity(),getFragmentManager());
         mRecyclerView.setAdapter(mTaskAdapter);
 
         return view;
@@ -67,7 +68,7 @@ public class ListFragmentDone extends Fragment {
     public void onResume() {
         super.onResume();
         mTaskListDone = mTaskLab.getDoneTaskList();
-        mTaskAdapter = new TaskAdapter(mTaskListDone, getActivity());
+        mTaskAdapter = new TaskAdapter(mTaskListDone, getActivity(),getFragmentManager());
         mRecyclerView.setAdapter(mTaskAdapter);
         Log.i("Res", "onResume: done");
     }

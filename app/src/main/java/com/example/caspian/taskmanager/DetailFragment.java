@@ -38,7 +38,7 @@ public class DetailFragment extends DialogFragment {
     public static final int REQ_PICKER_CODE = 1;
     private EditText txt_discribtion;
     private EditText txt_title;
-    private Button btn_date;
+    private TextView btn_date;
     private CheckBox chk_done;
 
     private Task mTask;

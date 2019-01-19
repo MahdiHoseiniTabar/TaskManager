@@ -8,7 +8,7 @@
     android:gravity="center_horizontal"
     android:padding="16dp"
     tools:context=".TaskFragment"
-    android:background="#18FFFF">
+    >
 
 
     <EditText

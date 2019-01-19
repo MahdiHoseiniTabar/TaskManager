@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#E0E0E0"
-    android:layout_marginBottom="1dp"
-    android:layout_marginEnd="1dp"
-    android:padding="8dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root_element"
-
-    >
-
-<de.hdodenhof.circleimageview.CircleImageView
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/item_list_all_circle_image"
-    android:src="@mipmap/ic_black_circle"
-    android:focusableInTouchMode="true"
-    android:layout_centerVertical="true"
-    />
+    android:layout_marginEnd="1dp"
+    android:layout_marginBottom="1dp"
+    android:background="#E0E0E0"
+
+    android:paddingStart="4dp"
+    android:paddingEnd="8dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/item_list_all_circle_image"
+        android:layout_width="70dp"
+        android:layout_height="75dp"
+        android:layout_centerVertical="true"
+        android:focusableInTouchMode="true"
+        android:src="@mipmap/ic_black_circle" />
 
     <TextView
         android:id="@+id/circle_image_text"
@@ -26,17 +25,23 @@
         android:layout_alignLeft="@id/item_list_all_circle_image"
         android:layout_alignRight="@id/item_list_all_circle_image"
         android:layout_centerVertical="true"
-        android:textAlignment="center"
         android:maxLength="1"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="25dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_toRightOf="@id/item_list_all_circle_image"
-        android:orientation="vertical"
-        android:layout_margin="8dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/item_list_all_title"
@@ -45,26 +50,25 @@
             android:text="title"
             android:textColor="@android:color/black"
             android:textSize="25dp" />
+
         <TextView
             android:id="@+id/item_list_all_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date"
-            android:textColor="#C2185B"
-            />
+            android:textColor="@color/colorAccent" />
     </LinearLayout>
 
-   <Button
-       android:id="@+id/button_edit_list"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_alignParentRight="true"
-       android:layout_centerVertical="true"
-       android:text="edit"
-       android:textSize="16dp"
-       android:background="@color/colorPrimary"
-       style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"
-       />
+    <Button
+        android:id="@+id/button_edit_list"
+        style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@color/colorPrimary"
+        android:text="edit"
+        android:textSize="16dp" />
 
 
 </RelativeLayout>

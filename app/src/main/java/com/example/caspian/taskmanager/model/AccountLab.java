@@ -73,9 +73,6 @@ public class AccountLab {
         }
     }
 
-    public List<Account> getAccounts() {
-        return new ArrayList<>();
-    }
 
     public void removeAccount(UUID id) {
         mDatabase.delete(TaskDbSchema.Account.NAME, TaskDbSchema.Account.AccountCols.UUID + " =  ? "
@@ -83,8 +80,9 @@ public class AccountLab {
 
     }
 
-    public void updateAccount(Account account) {
-
+    public void updateAccount(Account newAccount,UUID oldAccountId) {
+        mDatabase.update(TaskDbSchema.Account.NAME,getContentValue(newAccount),TaskDbSchema.Account.AccountCols.UUID
+        + "= ? ",new String[]{oldAccountId.toString()});
     }
 
     private ContentValues getContentValue(Account account) {

@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DetailDialogFragment"
-    android:background="#E0E0E0"
     >
 
     <TextView
@@ -32,8 +31,8 @@
         android:textColor="@android:color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/describ"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/describ" />
 
     <TextView
         android:id="@+id/textView3"
@@ -49,7 +48,7 @@
 
     <TextView
         android:id="@+id/date"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -58,7 +57,8 @@
         android:padding="8dp"
         android:text="5/10/76"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorAccent"
+        style="@style/Base.V7.Widget.AppCompat.AutoCompleteTextView"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView3"

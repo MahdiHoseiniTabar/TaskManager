@@ -1,6 +1,7 @@
 package com.example.caspian.taskmanager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,8 +58,8 @@ public class ListActivity extends AppCompatActivity {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TaskFragment taskFragment =TaskFragment.newInstance();
-                taskFragment.show(getSupportFragmentManager(),"dialog");
+                TaskFragment taskFragment = TaskFragment.newInstance();
+                taskFragment.show(getSupportFragmentManager(), "dialog");
 
             }
         });
@@ -146,8 +148,34 @@ public class ListActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.i("vasaaaa", "onDestroy: " + Account.isIsGUess());
-        if (Account.isIsGUess()) {
+        if (Account.isIsGUess())
             mAccountLab.getInstance(this).removeAccount((UUID) getIntent().getSerializableExtra(ACCOUNTID));
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (Account.isIsGUess() && mTaskList.size() != 0) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(ListActivity.this);
+            alert.setTitle("Warning!")
+                    .setMessage("if you exit without sign up your tasks won't save")
+                    .setPositiveButton("sign up", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(VerifyActivity.newIntent(ListActivity.this, (UUID) getIntent().getSerializableExtra(ACCOUNTID)));
+                        }
+                    })
+                    .setNegativeButton("exit", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ListActivity.this.finish();
+                        }
+                    })
+                    .show();
+        } else {
+            super.onBackPressed();
         }
+
     }
 }

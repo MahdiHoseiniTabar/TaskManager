@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -95,9 +98,10 @@ public class ListFragmentAll extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("poss>", "onResume: " + posision);
+
         if (posision == 0)
             mTaskList = mTaskLab.getTaskList();
+        Log.i("<<<?", "onResume: " + mTaskList.size());
         if (posision == 1)
             mTaskList = mTaskLab.getDoneTaskList();
         if (mTaskAdapter == null)
@@ -182,7 +186,7 @@ public class ListFragmentAll extends Fragment {
         public class Taskholder extends RecyclerView.ViewHolder {
             public RelativeLayout root;
             private CircleImageView mCircleImageView;
-            private TextView icon;
+           // private TextView icon;
             private TextView title;
             private TextView date;
             private Button edit;
@@ -191,15 +195,16 @@ public class ListFragmentAll extends Fragment {
                 super(itemView);
                 root = itemView.findViewById(R.id.root_element);
                 mCircleImageView = itemView.findViewById(R.id.item_list_all_circle_image);
-                icon = itemView.findViewById(R.id.circle_image_text);
+               // icon = itemView.findViewById(R.id.circle_image_text);
                 title = itemView.findViewById(R.id.item_list_all_title);
                 date = itemView.findViewById(R.id.item_list_all_date);
                 edit = itemView.findViewById(R.id.button_edit_list);
             }
 
             public void bind(final Task task) {
-                mCircleImageView.setCircleBackgroundColor(Color.BLACK);
-                icon.setText(task.getTitle());
+               // mCircleImageView.setCircleBackgroundColor(Color.BLACK);
+                mCircleImageView.setImageResource(R.drawable.task);
+              //  icon.setText(task.getTitle());
                 title.setText(task.getTitle());
                 date.setText(task.dateToString());
                 edit.setOnClickListener(new View.OnClickListener() {

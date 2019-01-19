@@ -70,7 +70,7 @@ public class MyDialogFragment extends DialogFragment {
         txt_title.setText(mTask.getTitle());
         txt_icon.setText(mTask.getTitle());
         txt_date.setText(mTask.dateToString());
-        mCircleImageView.setCircleBackgroundColor(Color.BLACK);
+        mCircleImageView.setCircleBackgroundColor(Color.RED);
 
         return new AlertDialog.Builder(getActivity())
                 .setTitle("Are you sure delete this Task?")

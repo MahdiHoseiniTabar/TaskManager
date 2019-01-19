@@ -65,7 +65,6 @@ public class SignInFragment extends Fragment {
                     mAccountLab.setAccountId(mAccount);
                     Account.setIsGUess(false);
                     startActivity(ListActivity.newIntent(getActivity(), mAccount.getAccountId()));
-
                 }
             }
         });

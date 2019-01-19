@@ -6,7 +6,7 @@ public class Account {
     private UUID AccountId;
     private String Username;
     private String Password;
-    private static boolean isGUess =false;
+    private static boolean isGuest =false;
 
 
     public Account(){ this(UUID.randomUUID());
@@ -16,11 +16,11 @@ public class Account {
     }
 
     public static boolean isIsGUess() {
-        return isGUess;
+        return isGuest;
     }
 
     public static void setIsGUess(boolean isGUess) {
-        Account.isGUess = isGUess;
+        Account.isGuest = isGUess;
     }
 
     public UUID getAccountId() {

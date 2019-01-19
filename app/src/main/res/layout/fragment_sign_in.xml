@@ -6,6 +6,7 @@
     tools:context=".SignInFragment"
     android:gravity="center"
     android:orientation="vertical"
+    android:layout_margin="16dp"
     android:id="@+id/signIn_fragment">
 
 
@@ -15,7 +16,7 @@
         android:layout_height="wrap_content"
         android:hint="USERNAME"
         android:inputType="textPersonName"
-        android:layout_margin="8dp"/>
+        />
 
     <EditText
         android:id="@+id/editText_pass_signin"
@@ -23,13 +24,13 @@
         android:layout_height="wrap_content"
         android:hint="PASSWORD"
         android:inputType="textPassword"
-        android:layout_margin="8dp"/>
+       />
 
     <Button
         android:id="@+id/button_signin"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="signin"
+        android:text="sign in"
         android:layout_marginTop="16dp"
         android:background="@color/colorPrimary"
         style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"/>
@@ -38,7 +39,7 @@
         android:id="@+id/button_guess"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="signin as a guess"
+        android:text="sign in as a guest"
         android:background="@color/colorPrimary"
         android:layout_marginTop="4dp"
         style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"/>
@@ -49,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginTop="32dp"
-        android:text="signup"
+        android:text="Sign Up? "
         android:textSize="20dp"
         android:textColor="@color/colorAccent"
         android:textAlignment="center"

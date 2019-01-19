@@ -4,17 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.caspian.taskmanager.database.TaskBaseHelper;
 import com.example.caspian.taskmanager.database.TaskCursorWraper;
 import com.example.caspian.taskmanager.database.TaskDbSchema;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,6 +36,10 @@ public class TaskLab {
         mDatabase = new TaskBaseHelper(mContext).getWritableDatabase();
     }
 
+    public static List<Task> getmTaskList() {
+        return mTaskList;
+    }
+
     public void addTask(Task task) {
       /*  Task task = new Task();
         task.setTitle(title);
@@ -53,6 +52,12 @@ public class TaskLab {
         mHashMap.put(task.getId(),task);*/
         ContentValues values = getContentValues(task);
         mDatabase.insert(TaskDbSchema.Task.NAME, null, values);
+
+    }
+    public void addTasks(List<Task> taskList){
+        for (int i = 0; i <taskList.size() ; i++) {
+            addTask(taskList.get(i));
+        }
 
     }
 
@@ -89,23 +94,23 @@ public class TaskLab {
         cursorWraper = new TaskCursorWraper(cursor);
         try {
             if (cursorWraper.getCount() == 0)
-                return mTaskList;
+                return getmTaskList();
             cursorWraper.moveToFirst();
             while (!cursorWraper.isAfterLast()) {
-                mTaskList.add(cursorWraper.getTask());
+                getmTaskList().add(cursorWraper.getTask());
                 cursorWraper.moveToNext();
             }
         } finally {
             cursorWraper.close();
         }
-        return mTaskList;
+        return getmTaskList();
     }
 
     public static List<Task> getDoneTaskList() {
         mDoneTaskList = new ArrayList<>();
-        for (int i = 0; i < mTaskList.size(); i++) {
-            if (mTaskList.get(i).isDone())
-                mDoneTaskList.add(mTaskList.get(i));
+        for (int i = 0; i < getmTaskList().size(); i++) {
+            if (getmTaskList().get(i).isDone())
+                mDoneTaskList.add(getmTaskList().get(i));
         }
         return mDoneTaskList;
     }

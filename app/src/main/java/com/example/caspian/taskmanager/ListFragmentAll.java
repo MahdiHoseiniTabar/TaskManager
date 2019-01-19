@@ -33,6 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ListFragmentAll extends Fragment {
     public static final String POSISION = "com.example.caspian.taskmanager.posision";
+    public static final int REQ_CODE = 0;
     private RecyclerView mRecyclerView;
     private TaskAdapter mTaskAdapter;
     private TaskLab mTaskLab;
@@ -99,11 +100,22 @@ public class ListFragmentAll extends Fragment {
 
     }
 
-
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK)
+            return;
+        if (requestCode == REQ_CODE){
+            /*mTaskList = mTaskLab.getTaskList();
+            mTaskList = mTaskLab.getDoneTaskList();
+            Log.i("<><>", "onActivityResult: " + mTaskList.size());
+            mTaskAdapter.setTaskList(mTaskList);
+            mTaskAdapter.notifyDataSetChanged();*/
+        }
+    }
 
     public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Taskholder> {
-        public static final int REQ_CODE = 0;
+
         private List<Task> mTaskList;
         private Context mContext;
 

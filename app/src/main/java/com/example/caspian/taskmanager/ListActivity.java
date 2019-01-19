@@ -2,12 +2,14 @@ package com.example.caspian.taskmanager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,8 +37,8 @@ public class ListActivity extends AppCompatActivity {
     private AccountLab mAccountLab;
 
 
-    public static Intent newIntent(Context context, UUID accountId ){
-        Intent intent = new Intent(context,ListActivity.class);
+    public static Intent newIntent(Context context, UUID accountId) {
+        Intent intent = new Intent(context, ListActivity.class);
         intent.putExtra(ACCOUNTID, accountId);
         return intent;
     }
@@ -48,8 +50,6 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         mTaskList = TaskLab.getmInstance(this).getTaskList();
-
-
 
 
         mFloatingActionButton = findViewById(R.id.floatingActionButton);
@@ -134,15 +134,18 @@ public class ListActivity extends AppCompatActivity {
                 }
             }
         });
-        }
+    }
 
+    public void myOnResume() {
+        this.onResume();
+    }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("vasaaaa", "onDestroy: "+Account.isIsGUess());
-        if (Account.isIsGUess()){
+        Log.i("vasaaaa", "onDestroy: " + Account.isIsGUess());
+        if (Account.isIsGUess()) {
             mAccountLab.getInstance(this).removeAccount((UUID) getIntent().getSerializableExtra(ACCOUNTID));
         }
     }

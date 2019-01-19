@@ -93,7 +93,11 @@ public class DetailFragment extends DialogFragment  {
                         newTask.setDescribtion(txt_discribtion.getText().toString());
                         newTask.setDone(chk_done.isChecked());
                         mTaskLab.editTask(newTask,mTask);
-                        getTargetFragment().onResume();
+
+                       /* Intent intent = new Intent();
+                        intent.putExtra("isEdit",true);
+                        getTargetFragment().onActivityResult(getTargetRequestCode(),Activity.RESULT_OK,intent);*/
+                        ((ListActivity)getActivity()).myOnResume();
                     }
                 })
                 .setNegativeButton("delete", new DialogInterface.OnClickListener() {

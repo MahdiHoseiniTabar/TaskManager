@@ -56,7 +56,8 @@ public class ListActivity extends AppCompatActivity {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(TaskActivity.newIntent(ListActivity.this, null));
+                TaskFragment taskFragment =TaskFragment.newInstance();
+                taskFragment.show(getSupportFragmentManager(),"dialog");
 
             }
         });

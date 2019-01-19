@@ -61,7 +61,7 @@ public class Task {
     public void setId(UUID id) {
         mId = id;
     }
-    public String dateToString(){
+    public  String dateToString(){
         SimpleDateFormat df = new SimpleDateFormat("EEE , dd/MM/yyyy ");
         return df.format(mDate);
     }

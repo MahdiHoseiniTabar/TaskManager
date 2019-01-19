@@ -23,7 +23,7 @@ public class TaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
-        TaskFragment taskFragment = TaskFragment.newInstance((UUID) getIntent().getSerializableExtra(ID));
+        TaskFragment taskFragment = TaskFragment.newInstance();
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (fragmentManager.findFragmentById(R.id.fragment_container) == null) {

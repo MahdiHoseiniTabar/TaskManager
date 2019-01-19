@@ -20,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
@@ -32,7 +33,7 @@ import java.util.UUID;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetailFragment extends DialogFragment  {
+public class DetailFragment extends DialogFragment {
     public static final String ID = "com.example.caspian.taskmanager.id";
     public static final int REQ_PICKER_CODE = 1;
     private EditText txt_discribtion;
@@ -43,6 +44,7 @@ public class DetailFragment extends DialogFragment  {
     private Task mTask;
     private TaskLab mTaskLab;
     private Date date;
+    private boolean flag = false;
 
     public static DetailFragment newInstance(UUID id) {
 
@@ -70,7 +72,7 @@ public class DetailFragment extends DialogFragment  {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_detail,null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_detail, null);
 
         txt_title = view.findViewById(R.id.title_txt);
         txt_discribtion = view.findViewById(R.id.describtion);
@@ -86,8 +88,8 @@ public class DetailFragment extends DialogFragment  {
             @Override
             public void onClick(View v) {
                 DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(mTask.getDate());
-                datePickerFragment.setTargetFragment(DetailFragment.this,REQ_PICKER_CODE);
-                datePickerFragment.show(getFragmentManager(),"dialog");
+                datePickerFragment.setTargetFragment(DetailFragment.this, REQ_PICKER_CODE);
+                datePickerFragment.show(getFragmentManager(), "dialog");
 
             }
         });
@@ -99,20 +101,25 @@ public class DetailFragment extends DialogFragment  {
                 .setPositiveButton("edit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Task newTask = new Task();
-                        newTask.setTitle(txt_title.getText().toString());
-                        newTask.setDescribtion(txt_discribtion.getText().toString());
-                        newTask.setDone(chk_done.isChecked());
-                        newTask.setDate(date);
-                        mTaskLab.editTask(newTask,mTask);
-                        ((ListActivity)getActivity()).myOnResume();
+                        if (txt_title.getText().toString().equals("")) {
+                            Toast.makeText(getActivity(), "Every Task must have a Title", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Task newTask = new Task();
+                            newTask.setTitle(txt_title.getText().toString());
+                            newTask.setDescribtion(txt_discribtion.getText().toString());
+                            newTask.setDone(chk_done.isChecked());
+                            if (flag)
+                                newTask.setDate(date);
+                            mTaskLab.editTask(newTask, mTask);
+                            ((ListActivity) getActivity()).myOnResume();
+                        }
                     }
                 })
                 .setNegativeButton("delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mTaskLab.deleteTask(mTask);
-                        ((ListActivity)getActivity()).myOnResume();
+                        ((ListActivity) getActivity()).myOnResume();
                     }
                 })
                 .show();
@@ -159,9 +166,9 @@ public class DetailFragment extends DialogFragment  {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_OK)
             return;
-        if (requestCode == REQ_PICKER_CODE){
+        if (requestCode == REQ_PICKER_CODE) {
             date = (Date) data.getSerializableExtra(DatePickerFragment.INTENT_DATE);
-
+            flag = data.getBooleanExtra(DatePickerFragment.INTENT_BOOLEAN , false);
             mTask.setDate(date);
             btn_date.setText(mTask.dateToString());
         }

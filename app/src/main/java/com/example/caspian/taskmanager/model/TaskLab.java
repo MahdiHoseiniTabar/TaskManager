@@ -56,7 +56,7 @@ public class TaskLab {
 
     }
 
-    public boolean taskIsExist(Task task) {
+    /*public boolean taskIsExist(Task task) {
         Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.TITLE + " = ? "
                         + " AND " + TaskDbSchema.Task.TaskCols.ACCOUNTID + " = ? ", new String[]{task.getTitle(), AccountLab.accountId.toString()},
                 null, null, null);
@@ -67,14 +67,14 @@ public class TaskLab {
             cursorWraper.close();
         }
 
-    }
+    }*/
 
     private ContentValues getContentValues(Task task) {
         ContentValues values = new ContentValues();
         values.put(TaskDbSchema.Task.TaskCols.UUID, task.getId().toString());
         values.put(TaskDbSchema.Task.TaskCols.TITLE, task.getTitle());
         values.put(TaskDbSchema.Task.TaskCols.DESCRIPTION, task.getDescribtion());
-        values.put(TaskDbSchema.Task.TaskCols.DATE, task.getDate().toString());
+        values.put(TaskDbSchema.Task.TaskCols.DATE, task.getDate().getTime());
         values.put(TaskDbSchema.Task.TaskCols.ISDONE, task.isDone() ? 1 : 0);
         values.put(TaskDbSchema.Task.TaskCols.ACCOUNTID, task.getMaccountId().toString());
         return values;

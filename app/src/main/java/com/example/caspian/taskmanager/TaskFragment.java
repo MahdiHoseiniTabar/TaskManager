@@ -1,10 +1,16 @@
 package com.example.caspian.taskmanager;
 
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.caspian.taskmanager.model.Task;
@@ -26,24 +33,24 @@ import java.util.UUID;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TaskFragment extends Fragment {
+public class TaskFragment extends DialogFragment {
+    public static final int REQ_CODE = 2;
     public static final String ID = "com.example.caspian.taskmanager.id";
     private EditText ed_title;
     private EditText ed_Describtion;
     private CheckBox chkbx_done;
-    private Button btn_save;
-    private Button btn_edit;
+    private TextView txt_addDate;
+
+    private boolean flag = false;
+
     private Task task;
     private TaskLab mTaskLab;
-    private String title;
-    private String describtion;
-    private boolean done;
     private Date date;
 
-    public static TaskFragment newInstance(UUID id) {
+    public static TaskFragment newInstance() {
 
         Bundle args = new Bundle();
-        args.putSerializable(ID, id);
+
         TaskFragment fragment = new TaskFragment();
         fragment.setArguments(args);
         return fragment;
@@ -54,87 +61,74 @@ public class TaskFragment extends Fragment {
         // Required empty public constructor
     }
 
+
+    @NonNull
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.i("***", "onCreate: ");
-
-
-        mTaskLab = TaskLab.getmInstance(getActivity());
-        if (getArguments().getSerializable(ID) != null)
-            task = mTaskLab.getTask((UUID) getArguments().getSerializable(ID));
-
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_task, container, false);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_task, null);
 
         ed_title = view.findViewById(R.id.editText_title);
         ed_Describtion = view.findViewById(R.id.editText_Describtion);
         chkbx_done = view.findViewById(R.id.checkBox_Done);
-        btn_save = view.findViewById(R.id.button_save);
-        btn_edit = view.findViewById(R.id.button_edit);
+        txt_addDate = view.findViewById(R.id.text_date);
 
-
-        if (getArguments().getSerializable(ID) == null) {
-            btn_edit.setEnabled(false);
-        }
-        if (getArguments().getSerializable(ID) != null) {
-            btn_save.setEnabled(false);
-            ed_title.setText(task.getTitle());
-            ed_Describtion.setText(task.getDescribtion());
-            chkbx_done.setChecked(task.isDone());
-        }
-        Calendar calendar = Calendar.getInstance();
-
-        date = calendar.getTime();
-
-        btn_save.setOnClickListener(new View.OnClickListener() {
+        task = new Task();
+        txt_addDate.setText(task.dateToString());
+        txt_addDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ed_title.getText().toString().equals("")) {
-                    Toast.makeText(getActivity(), "Every Task must have a Title", Toast.LENGTH_SHORT).show();
-                } else {
-                    task = new Task();
-                    title = ed_title.getText().toString();
-                    describtion = ed_Describtion.getText().toString();
-                    done = chkbx_done.isChecked();
-                    task.setTitle(title);
-                    task.setDescribtion(describtion);
-                    task.setDate(date);
-                    task.setDone(done);
-                    if (mTaskLab.taskIsExist(task))
-                        Toast.makeText(getActivity(), "This task already existed", Toast.LENGTH_SHORT).show();
-                    else {
-                        mTaskLab.addTask(task);
-                        getActivity().finish();
+                DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(new Date());
+                datePickerFragment.setTargetFragment(TaskFragment.this, REQ_CODE);
+                datePickerFragment.show(getFragmentManager(), "dialog");
+            }
+        });
+
+
+        mTaskLab = TaskLab.getmInstance(getActivity());
+
+
+        return new AlertDialog.Builder(getActivity())
+                .setTitle("ADD NEW TASK")
+                .setView(view)
+                .setCancelable(true)
+                .setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Calendar calendar = Calendar.getInstance();
+                        date = calendar.getTime();
+                        if (ed_title.getText().toString().equals("")) {
+                            Toast.makeText(getActivity(), "every Task must have a Title", Toast.LENGTH_SHORT).show();
+                        } else {
+
+                            task.setTitle(ed_title.getText().toString());
+                            task.setDescribtion(ed_Describtion.getText().toString());
+                            if (flag)
+                                task.setDate(date);
+                            task.setDone(chkbx_done.isChecked());
+                            mTaskLab.addTask(task);
+                            ((ListActivity) getActivity()).myOnResume();
+                        }
                     }
-                }
-
-            }
-        });
-        btn_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ed_title.getText().toString().equals("")) {
-                    Toast.makeText(getActivity(), "Every Task must have a Title", Toast.LENGTH_SHORT).show();
-                } else {
-                    Task newTask = new Task();
-                    newTask.setDone(chkbx_done.isChecked());
-                    newTask.setTitle(ed_title.getText().toString());
-                    newTask.setDescribtion(ed_Describtion.getText().toString());
-                    newTask.setDate(date);
-                    mTaskLab.editTask(newTask, task);
-                    getActivity().finish();
-                }
-            }
-        });
-
-        return view;
+                })
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK)
+            return;
+        if (requestCode == REQ_CODE) {
+            date = (Date) data.getSerializableExtra(DatePickerFragment.INTENT_DATE);
+            flag = data.getBooleanExtra(DatePickerFragment.INTENT_BOOLEAN, false);
+            task.setDate(date);
+            txt_addDate.setText(task.dateToString());
+        }
+    }
 }

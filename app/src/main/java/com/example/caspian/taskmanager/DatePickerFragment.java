@@ -25,6 +25,7 @@ import java.util.GregorianCalendar;
 public class DatePickerFragment extends DialogFragment {
     public static final String ARG_DATE = "com.example.caspian.taskmanager.date";
     public static final String INTENT_DATE = "com.example.caspian.taskmanager.intentdate";
+    public static final String INTENT_BOOLEAN = "com.example.caspian.taskmanager.intentboolean";
     private DatePicker mDatePicker;
 
     public static DatePickerFragment newInstance(Date date) {
@@ -76,6 +77,7 @@ public class DatePickerFragment extends DialogFragment {
     public void sendResult(Date date){
         Intent intent = new Intent();
         intent.putExtra(INTENT_DATE,date);
+        intent.putExtra(INTENT_BOOLEAN,true);
         getTargetFragment().onActivityResult(getTargetRequestCode(),Activity.RESULT_OK,intent);
         getTargetFragment().onResume();
     }

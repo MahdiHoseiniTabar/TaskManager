@@ -65,6 +65,7 @@ public class DetailDialogFragment extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setTitle(mTask.getTitle())
                 .setView(view)
+                .setCancelable(true)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

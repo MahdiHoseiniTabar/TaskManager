@@ -40,7 +40,6 @@ public class DetailFragment extends DialogFragment  {
 
     private Task mTask;
     private TaskLab mTaskLab;
-    private MyDialogFragment mMyDialogFragment;
 
     public static DetailFragment newInstance(UUID id) {
 
@@ -93,17 +92,14 @@ public class DetailFragment extends DialogFragment  {
                         newTask.setDescribtion(txt_discribtion.getText().toString());
                         newTask.setDone(chk_done.isChecked());
                         mTaskLab.editTask(newTask,mTask);
-
-                       /* Intent intent = new Intent();
-                        intent.putExtra("isEdit",true);
-                        getTargetFragment().onActivityResult(getTargetRequestCode(),Activity.RESULT_OK,intent);*/
                         ((ListActivity)getActivity()).myOnResume();
                     }
                 })
                 .setNegativeButton("delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        mTaskLab.deleteTask(mTask);
+                        ((ListActivity)getActivity()).myOnResume();
                     }
                 })
                 .show();

@@ -24,6 +24,8 @@ import android.widget.TextView;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -32,14 +34,15 @@ import java.util.UUID;
  */
 public class DetailFragment extends DialogFragment  {
     public static final String ID = "com.example.caspian.taskmanager.id";
+    public static final int REQ_PICKER_CODE = 1;
     private EditText txt_discribtion;
     private EditText txt_title;
-    private Button txt_date;
+    private Button btn_date;
     private CheckBox chk_done;
-
 
     private Task mTask;
     private TaskLab mTaskLab;
+    private Date date;
 
     public static DetailFragment newInstance(UUID id) {
 
@@ -71,14 +74,23 @@ public class DetailFragment extends DialogFragment  {
 
         txt_title = view.findViewById(R.id.title_txt);
         txt_discribtion = view.findViewById(R.id.describtion);
-        txt_date = view.findViewById(R.id.date);
+        btn_date = view.findViewById(R.id.date);
         chk_done = view.findViewById(R.id.checkBox_done_edit);
 
-
         txt_title.setText(mTask.getTitle());
-        txt_date.setText(mTask.dateToString());
+        btn_date.setText(mTask.dateToString());
         txt_discribtion.setText(mTask.getDescribtion());
         chk_done.setChecked(mTask.isDone());
+
+        btn_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(mTask.getDate());
+                datePickerFragment.setTargetFragment(DetailFragment.this,REQ_PICKER_CODE);
+                datePickerFragment.show(getFragmentManager(),"dialog");
+
+            }
+        });
 
 
         return new AlertDialog.Builder(getActivity())
@@ -91,6 +103,7 @@ public class DetailFragment extends DialogFragment  {
                         newTask.setTitle(txt_title.getText().toString());
                         newTask.setDescribtion(txt_discribtion.getText().toString());
                         newTask.setDone(chk_done.isChecked());
+                        newTask.setDate(date);
                         mTaskLab.editTask(newTask,mTask);
                         ((ListActivity)getActivity()).myOnResume();
                     }
@@ -137,7 +150,20 @@ public class DetailFragment extends DialogFragment  {
     public void onResume() {
         super.onResume();
         txt_title.setText(mTask.getTitle());
-        txt_date.setText(mTask.dateToString());
+        btn_date.setText(mTask.dateToString());
         txt_discribtion.setText(mTask.getDescribtion());
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK)
+            return;
+        if (requestCode == REQ_PICKER_CODE){
+            date = (Date) data.getSerializableExtra(DatePickerFragment.INTENT_DATE);
+
+            mTask.setDate(date);
+            btn_date.setText(mTask.dateToString());
+        }
     }
 }

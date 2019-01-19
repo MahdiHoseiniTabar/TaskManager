@@ -62,7 +62,7 @@ public class Task {
         mId = id;
     }
     public String dateToString(){
-        SimpleDateFormat df = new SimpleDateFormat("EEE , dd/MM/yyyy , HH:mm:ss a");
+        SimpleDateFormat df = new SimpleDateFormat("EEE , dd/MM/yyyy ");
         return df.format(mDate);
     }
 

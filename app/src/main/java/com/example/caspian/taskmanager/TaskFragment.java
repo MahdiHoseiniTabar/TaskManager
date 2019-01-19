@@ -35,7 +35,6 @@ import java.util.UUID;
  */
 public class TaskFragment extends DialogFragment {
     public static final int REQ_CODE = 2;
-    public static final String ID = "com.example.caspian.taskmanager.id";
     private EditText ed_title;
     private EditText ed_Describtion;
     private CheckBox chkbx_done;
@@ -77,7 +76,7 @@ public class TaskFragment extends DialogFragment {
         txt_addDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(new Date());
+                DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(task.getDate());
                 datePickerFragment.setTargetFragment(TaskFragment.this, REQ_CODE);
                 datePickerFragment.show(getFragmentManager(), "dialog");
             }
@@ -94,14 +93,13 @@ public class TaskFragment extends DialogFragment {
                 .setPositiveButton("ADD", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Calendar calendar = Calendar.getInstance();
-                        date = calendar.getTime();
                         if (ed_title.getText().toString().equals("")) {
                             Toast.makeText(getActivity(), "every Task must have a Title", Toast.LENGTH_SHORT).show();
                         } else {
 
                             task.setTitle(ed_title.getText().toString());
                             task.setDescribtion(ed_Describtion.getText().toString());
+                            Log.i(">>>>", "onClick: " + flag);
                             if (flag)
                                 task.setDate(date);
                             task.setDone(chkbx_done.isChecked());

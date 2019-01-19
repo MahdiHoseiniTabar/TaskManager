@@ -2,18 +2,25 @@ package com.example.caspian.taskmanager;
 
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -65,6 +72,7 @@ public class ListFragmentAll extends Fragment {
             mTaskList = mTaskLab.getTaskList();
         if (posision == 1)
             mTaskList = mTaskLab.getDoneTaskList();
+        setHasOptionsMenu(true);
 
     }
 
@@ -101,17 +109,37 @@ public class ListFragmentAll extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_OK)
-            return;
-        if (requestCode == REQ_CODE){
-            /*mTaskList = mTaskLab.getTaskList();
-            mTaskList = mTaskLab.getDoneTaskList();
-            Log.i("<><>", "onActivityResult: " + mTaskList.size());
-            mTaskAdapter.setTaskList(mTaskList);
-            mTaskAdapter.notifyDataSetChanged();*/
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.fragment_list,menu);
+       // MenuItem item = menu.findItem(R.id.delete_task);
+
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.delete_task){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+            alertDialog.setTitle("Are you sure to delete all Tasks")
+                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mTaskLab.deleteAllTask();
+                            ((ListActivity)getActivity()).myOnResume();
+                        }
+                    })
+                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .show();
+            return true;
         }
+        return false;
+
     }
 
     public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Taskholder> {

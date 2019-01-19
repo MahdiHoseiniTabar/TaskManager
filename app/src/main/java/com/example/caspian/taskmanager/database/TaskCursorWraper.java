@@ -31,7 +31,7 @@ public class TaskCursorWraper extends CursorWrapper {
         UUID id = UUID.fromString(getString(getColumnIndex(TaskDbSchema.Task.TaskCols.UUID)));
         String title = getString(getColumnIndex(TaskDbSchema.Task.TaskCols.TITLE));
         String description = getString(getColumnIndex(TaskDbSchema.Task.TaskCols.DESCRIPTION));
-        Date date =new Date((getColumnIndex(TaskDbSchema.Task.TaskCols.DATE)));
+        Date date =new Date(getLong(getColumnIndex(TaskDbSchema.Task.TaskCols.DATE)));
         boolean isDone = getInt(getColumnIndex(TaskDbSchema.Task.TaskCols.ISDONE)) != 0;
         Task task = new Task(id);
         task.setTitle(title);

@@ -137,6 +137,10 @@ public class TaskLab {
                 , new String[]{task.getId().toString()});
     }
 
+    public void deleteAllTask(){
+        mDatabase.delete(TaskDbSchema.Task.NAME,TaskDbSchema.Task.TaskCols.ACCOUNTID +" = ? ",new String[]{AccountLab.accountId.toString()});
+    }
+
     public void editTask(Task newTask, Task oldTask) {
        /* mTaskList.remove(oldTask);
         mDoneTaskList.remove(oldTask);

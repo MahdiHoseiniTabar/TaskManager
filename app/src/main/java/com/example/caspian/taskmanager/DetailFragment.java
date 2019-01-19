@@ -98,7 +98,7 @@ public class DetailFragment extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setTitle("edit Task")
                 .setView(view)
-                .setPositiveButton("edit", new DialogInterface.OnClickListener() {
+                .setPositiveButton("EDIT", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (txt_title.getText().toString().equals("")) {

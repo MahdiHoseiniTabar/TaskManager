@@ -12,7 +12,7 @@ public class VerifyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_verify);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.verify_container,new SignInFragment())
+                .replace(R.id.verify_container,new SignInFragment())
                 .commit();
     }
 }

@@ -1,8 +1,10 @@
 package com.example.caspian.taskmanager;
 
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +15,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -25,14 +30,13 @@ import java.util.UUID;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetailFragment extends Fragment implements View.OnClickListener {
+public class DetailFragment extends DialogFragment  {
     public static final String ID = "com.example.caspian.taskmanager.id";
-    private TextView txt_discribtion;
-    private TextView txt_title;
-    private TextView txt_date;
-    private ImageButton imgbtn_done;
-    private ImageButton imgbtn_edit;
-    private ImageButton imgbtn_delete;
+    private EditText txt_discribtion;
+    private EditText txt_title;
+    private Button txt_date;
+    private CheckBox chk_done;
+
 
     private Task mTask;
     private TaskLab mTaskLab;
@@ -61,38 +65,50 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        View view = inflater.inflate(R.layout.fragment_detail, container, false);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_detail,null);
 
         txt_title = view.findViewById(R.id.title_txt);
         txt_discribtion = view.findViewById(R.id.describtion);
         txt_date = view.findViewById(R.id.date);
-        imgbtn_done = view.findViewById(R.id.done_imageButton);
-        imgbtn_delete = view.findViewById(R.id.delete);
-        imgbtn_edit = view.findViewById(R.id.edit);
+        chk_done = view.findViewById(R.id.checkBox_done_edit);
+
 
         txt_title.setText(mTask.getTitle());
         txt_date.setText(mTask.dateToString());
         txt_discribtion.setText(mTask.getDescribtion());
-
-        if (mTask.isDone())
-            imgbtn_done.setVisibility(View.GONE);
-        imgbtn_done.setOnClickListener(this);
-        imgbtn_edit.setOnClickListener(this);
-        imgbtn_delete.setOnClickListener(this);
+        chk_done.setChecked(mTask.isDone());
 
 
-        return view;
+        return new AlertDialog.Builder(getActivity())
+                .setTitle("edit Task")
+                .setView(view)
+                .setPositiveButton("edit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Task newTask = new Task();
+                        newTask.setTitle(txt_title.getText().toString());
+                        newTask.setDescribtion(txt_discribtion.getText().toString());
+                        newTask.setDone(chk_done.isChecked());
+                        mTaskLab.editTask(newTask,mTask);
+                        getTargetFragment().onResume();
+                    }
+                })
+                .setNegativeButton("delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
     }
 
 
-    @Override
 
-    public void onClick(View v) {
+
+   /* public void onClick(View v) {
         switch (v.getId()) {
             case R.id.done_imageButton:
                 Task newTask = mTaskLab.doneTask(mTask);
@@ -108,7 +124,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                 mMyDialogFragment.show(getFragmentManager(),"Dialog");
                 break;
         }
-    }
+    }*/
 
  /*   @NonNull
     @Override

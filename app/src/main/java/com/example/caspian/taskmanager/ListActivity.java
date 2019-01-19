@@ -28,7 +28,6 @@ import java.util.UUID;
 
 public class ListActivity extends AppCompatActivity {
     public static final String ACCOUNTID = "com.example.caspian.taskmanager.accId";
-    public static final String TASKID = "com.example.caspian.taskmanager.taskId";
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private FloatingActionButton mFloatingActionButton;
@@ -71,9 +70,9 @@ public class ListActivity extends AppCompatActivity {
                     return new TaskleesFragment();
                 else {
                     if (position == 0)
-                        return ListFragmentAll.newInstance();
+                        return ListFragmentAll.newInstance(position);
                     else
-                        return ListFragmentDone.newInstance();
+                        return ListFragmentAll.newInstance(position);
                 }
             }
 
@@ -95,22 +94,15 @@ public class ListActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
         mTabLayout.setupWithViewPager(mViewPager);
-
-
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i(">>/", "onResume: Activity");
         mTaskList = TaskLab.getmInstance(this).getTaskList();
         Log.i("activitylist", "onResume: " + mTaskList.size());
-
         mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -118,9 +110,9 @@ public class ListActivity extends AppCompatActivity {
                     return new TaskleesFragment();
                 else {
                     if (position == 0)
-                        return ListFragmentAll.newInstance();
+                        return ListFragmentAll.newInstance(position);
                     else
-                        return ListFragmentDone.newInstance();
+                        return ListFragmentAll.newInstance(position);
                 }
             }
 
@@ -143,8 +135,6 @@ public class ListActivity extends AppCompatActivity {
             }
         });
         }
-
-
 
 
 

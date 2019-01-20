@@ -11,10 +11,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.caspian.taskmanager.database.TaskDbSchema;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
 
@@ -24,22 +22,22 @@ import java.util.UUID;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetailDialogFragment extends DialogFragment {
+public class DialogFragmentShow extends DialogFragment {
     public static final String TASKID = "taskid";
     private TextView txt_discribtion;
     private TextView txt_date;
     private Task mTask;
 
-    public static DetailDialogFragment newInstance(UUID uuid) {
+    public static DialogFragmentShow newInstance(UUID uuid) {
 
         Bundle args = new Bundle();
         args.putSerializable(TASKID, uuid);
-        DetailDialogFragment fragment = new DetailDialogFragment();
+        DialogFragmentShow fragment = new DialogFragmentShow();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public DetailDialogFragment() {
+    public DialogFragmentShow() {
         // Required empty public constructor
     }
 

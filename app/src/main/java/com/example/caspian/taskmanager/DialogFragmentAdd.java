@@ -7,15 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,16 +21,13 @@ import android.widget.Toast;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.UUID;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TaskFragment extends DialogFragment {
+public class DialogFragmentAdd extends DialogFragment {
     public static final int REQ_CODE = 2;
     private EditText ed_title;
     private EditText ed_Describtion;
@@ -46,17 +40,17 @@ public class TaskFragment extends DialogFragment {
     private TaskLab mTaskLab;
     private Date date;
 
-    public static TaskFragment newInstance() {
+    public static DialogFragmentAdd newInstance() {
 
         Bundle args = new Bundle();
 
-        TaskFragment fragment = new TaskFragment();
+        DialogFragmentAdd fragment = new DialogFragmentAdd();
         fragment.setArguments(args);
         return fragment;
     }
 
 
-    public TaskFragment() {
+    public DialogFragmentAdd() {
         // Required empty public constructor
     }
 
@@ -77,7 +71,7 @@ public class TaskFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(task.getDate());
-                datePickerFragment.setTargetFragment(TaskFragment.this, REQ_CODE);
+                datePickerFragment.setTargetFragment(DialogFragmentAdd.this, REQ_CODE);
                 datePickerFragment.show(getFragmentManager(), "dialog");
             }
         });
@@ -104,7 +98,8 @@ public class TaskFragment extends DialogFragment {
                                 task.setDate(date);
                             task.setDone(chkbx_done.isChecked());
                             mTaskLab.addTask(task);
-                            ((ListActivity) getActivity()).myOnResume();
+                            CallBack callBack = (CallBack) getActivity();
+                            callBack.callBack();
                         }
                     }
                 })

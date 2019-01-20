@@ -1,21 +1,12 @@
 package com.example.caspian.taskmanager;
 
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -130,7 +121,8 @@ public class ListFragmentAll extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             mTaskLab.deleteAllTask();
-                            ((ListActivity)getActivity()).myOnResume();
+                           CallBack callBack = (CallBack) getActivity();
+                           callBack.callBack();
                         }
                     })
                     .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -210,17 +202,17 @@ public class ListFragmentAll extends Fragment {
                 edit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DetailFragment detailFragment = DetailFragment.newInstance(task.getId());
-                        detailFragment.setTargetFragment(ListFragmentAll.this, REQ_CODE);
-                        detailFragment.show(getFragmentManager(), "dialog");
+                        DialogFragmentEdit dialogFragmentEdit = DialogFragmentEdit.newInstance(task.getId());
+                        dialogFragmentEdit.setTargetFragment(ListFragmentAll.this, REQ_CODE);
+                        dialogFragmentEdit.show(getFragmentManager(), "dialog");
                     }
                 });
                 root.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         /*mContext.startActivity(DetailActivity.newIntent(mContext, task.getId()));*/
-                        DetailDialogFragment detailDialogFragment = DetailDialogFragment.newInstance(task.getId());
-                        detailDialogFragment.show(getFragmentManager(), "dialog");
+                        DialogFragmentShow dialogFragmentShow = DialogFragmentShow.newInstance(task.getId());
+                        dialogFragmentShow.show(getFragmentManager(), "dialog");
                     }
                 });
             }

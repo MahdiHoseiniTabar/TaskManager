@@ -16,7 +16,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.detail_fragment_container, DetailFragment.newInstance((UUID) getIntent().getSerializableExtra(ID)))
+                .replace(R.id.detail_fragment_container, DialogFragmentEdit.newInstance((UUID) getIntent().getSerializableExtra(ID)))
                 .commit();
     }
 }

@@ -11,21 +11,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -33,7 +28,7 @@ import java.util.UUID;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetailFragment extends DialogFragment {
+public class DialogFragmentEdit extends DialogFragment {
     public static final String ID = "com.example.caspian.taskmanager.id";
     public static final int REQ_PICKER_CODE = 1;
     private EditText txt_discribtion;
@@ -46,17 +41,17 @@ public class DetailFragment extends DialogFragment {
     private Date date;
     private boolean flag = false;
 
-    public static DetailFragment newInstance(UUID id) {
+    public static DialogFragmentEdit newInstance(UUID id) {
 
         Bundle args = new Bundle();
         args.putSerializable(ID, id);
-        DetailFragment fragment = new DetailFragment();
+        DialogFragmentEdit fragment = new DialogFragmentEdit();
         fragment.setArguments(args);
         return fragment;
     }
 
 
-    public DetailFragment() {
+    public DialogFragmentEdit() {
         // Required empty public constructor
     }
 
@@ -88,13 +83,13 @@ public class DetailFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(mTask.getDate());
-                datePickerFragment.setTargetFragment(DetailFragment.this, REQ_PICKER_CODE);
+                datePickerFragment.setTargetFragment(DialogFragmentEdit.this, REQ_PICKER_CODE);
                 datePickerFragment.show(getFragmentManager(), "dialog");
 
             }
         });
 
-
+        final CallBack callBack = (CallBack) getActivity();
         return new AlertDialog.Builder(getActivity())
                 .setTitle("edit Task")
                 .setView(view)
@@ -111,7 +106,8 @@ public class DetailFragment extends DialogFragment {
                             if (flag)
                                 newTask.setDate(date);
                             mTaskLab.editTask(newTask, mTask);
-                            ((ListActivity) getActivity()).myOnResume();
+
+                            callBack.callBack();
                         }
                     }
                 })
@@ -119,40 +115,12 @@ public class DetailFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mTaskLab.deleteTask(mTask);
-                        ((ListActivity) getActivity()).myOnResume();
+
+                        callBack.callBack();
                     }
                 })
                 .show();
     }
-
-
-
-
-   /* public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.done_imageButton:
-                Task newTask = mTaskLab.doneTask(mTask);
-                mTaskLab.editTask(newTask, mTask);
-                getActivity().finish();
-                break;
-            case R.id.edit:
-                startActivity(TaskActivity.newIntent(getActivity(), (UUID) getArguments().getSerializable(ID)));
-                getActivity().finish();
-                break;
-            case R.id.delete:
-                mMyDialogFragment = MyDialogFragment.newInstance((UUID) getArguments().getSerializable(ID));
-                mMyDialogFragment.show(getFragmentManager(),"Dialog");
-                break;
-        }
-    }*/
-
- /*   @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_list_all,null);
-
-    }*/
-
     @Override
     public void onResume() {
         super.onResume();

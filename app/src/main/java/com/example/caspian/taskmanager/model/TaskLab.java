@@ -16,10 +16,8 @@ import java.util.UUID;
 //singleton Repository
 public class TaskLab {
     private static TaskLab mInstance;
-    //private static List<Task> mTaskList = new ArrayList<>();
     private static List<Task> mTaskList;
     private static List<Task> mDoneTaskList;
-    /*private static HashMap<UUID, Task> mHashMap = new LinkedHashMap<>();*/
     private static SQLiteDatabase mDatabase;
     private Context mContext;
     private static TaskCursorWraper cursorWraper;
@@ -54,25 +52,9 @@ public class TaskLab {
         mDatabase.insert(TaskDbSchema.Task.NAME, null, values);
 
     }
-    public void addTasks(List<Task> taskList){
-        for (int i = 0; i <taskList.size() ; i++) {
-            addTask(taskList.get(i));
-        }
 
-    }
 
-    /*public boolean taskIsExist(Task task) {
-        Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.TITLE + " = ? "
-                        + " AND " + TaskDbSchema.Task.TaskCols.ACCOUNTID + " = ? ", new String[]{task.getTitle(), AccountLab.accountId.toString()},
-                null, null, null);
-        cursorWraper = new TaskCursorWraper(cursor);
-        try {
-            return cursorWraper.getCount() != 0;
-        } finally {
-            cursorWraper.close();
-        }
 
-    }*/
 
     private ContentValues getContentValues(Task task) {
         ContentValues values = new ContentValues();
@@ -87,8 +69,7 @@ public class TaskLab {
 
     public static List<Task> getTaskList() {
         mTaskList = new ArrayList<>();
-        /*Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.ACCOUNTID
-                + " = ? ", new String[]{task.getMaccountId().toString()},null, null, null );*/
+
         Cursor cursor = mDatabase.rawQuery("SELECT * from " + TaskDbSchema.Task.NAME + " WHERE " + TaskDbSchema.Task.TaskCols.ACCOUNTID
                 + " = ? ", new String[]{AccountLab.accountId.toString()});
         cursorWraper = new TaskCursorWraper(cursor);
@@ -116,7 +97,6 @@ public class TaskLab {
     }
 
     public Task getTask(UUID id) {
-        /*return mHashMap.get(id);*/
         Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.UUID + " = ? ",
                 new String[]{id.toString()}, null, null, null);
         TaskCursorWraper cursorWraper = new TaskCursorWraper(cursor);
@@ -157,24 +137,6 @@ public class TaskLab {
                 , new String[]{oldTask.getId().toString()});
     }
 
-    public Task doneTask(Task oldTask) {
-        Task newTask = new Task();
-        newTask.setTitle(oldTask.getTitle());
-        newTask.setDescribtion(oldTask.getDescribtion());
-        newTask.setDate(oldTask.getDate());
-        newTask.setId(oldTask.getId());
-        newTask.setDone(true);
-        return newTask;
-    }
-   /* public void doneTask(Task task) {
-        for (int i = 0; i < mTaskList.size(); i++) {
-            if (mTaskList.get(i) == task) {
-                mTaskList.get(i).setDone(true);
-                mDoneTaskList.add(mTaskList.get(i));
-                break;
-            }
-        }
 
-    }*/
 
 }

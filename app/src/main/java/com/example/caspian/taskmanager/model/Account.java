@@ -1,47 +1,57 @@
 package com.example.caspian.taskmanager.model;
 
-import java.util.UUID;
+import org.greenrobot.greendao.annotation.Convert;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Unique;
 
+import java.util.UUID;
+import org.greenrobot.greendao.annotation.Generated;
+
+@Entity
 public class Account {
+    @Id(autoincrement = true)
+    private Long id;
+
+    @Convert(converter = UUIDConverter.class,columnType = String.class)
     private UUID AccountId;
+
+    @Unique
     private String Username;
     private String Password;
-    private static boolean isGuest =false;
-
-
-    public Account(){ this(UUID.randomUUID());
+    @Generated(hash = 600756919)
+    public Account(Long id, UUID AccountId, String Username, String Password) {
+        this.id = id;
+        this.AccountId = AccountId;
+        this.Username = Username;
+        this.Password = Password;
     }
-    public Account(UUID id){
-        AccountId = id;
+    @Generated(hash = 214225843)
+    public Account() {
+        AccountId = UUID.randomUUID();
     }
-
-    public static boolean isIsGUess() {
-        return isGuest;
+    public Long getId() {
+        return this.id;
     }
-
-    public static void setIsGUess(boolean isGUess) {
-        Account.isGuest = isGUess;
+    public void setId(Long id) {
+        this.id = id;
     }
-
     public UUID getAccountId() {
-        return AccountId;
+        return this.AccountId;
     }
-
+    public void setAccountId(UUID AccountId) {
+        this.AccountId = AccountId;
+    }
     public String getUsername() {
-        return Username;
+        return this.Username;
     }
-
-    public void setUsername(String username) {
-        Username = username;
+    public void setUsername(String Username) {
+        this.Username = Username;
     }
-
     public String getPassword() {
-        return Password;
+        return this.Password;
     }
-
-    public void setPassword(String pasword) {
-        Password = pasword;
+    public void setPassword(String Password) {
+        this.Password = Password;
     }
-
-
 }

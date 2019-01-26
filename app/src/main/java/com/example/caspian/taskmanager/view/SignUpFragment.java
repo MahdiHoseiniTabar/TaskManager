@@ -50,7 +50,7 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.i("back<", "onCreateView: " + Account.isIsGUess());
+        Log.i("back<", "onCreateView: " + AccountLab.isIsGUess());
         mAccount = new Account();
         mAccountLab = AccountLab.getInstance(getActivity());
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
@@ -73,8 +73,8 @@ public class SignUpFragment extends Fragment {
                         } else {
 
                             Toast.makeText(getActivity(), "Your Account Created!", Toast.LENGTH_SHORT).show();
-                            if (Account.isIsGUess()) {
-                                Account.setIsGUess(false);
+                            if (AccountLab.isIsGUess()) {
+                                AccountLab.setIsGUess(false);
 
                                 mAccountLab.updateAccount(mAccount, (UUID) getArguments().getSerializable(ID));
                                 getActivity().finish();

@@ -3,7 +3,6 @@ package com.example.caspian.taskmanager.database;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import com.example.caspian.taskmanager.model.Account;
 import com.example.caspian.taskmanager.model.Task;
 
 import java.util.Date;

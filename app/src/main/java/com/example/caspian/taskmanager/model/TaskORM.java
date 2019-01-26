@@ -23,7 +23,7 @@ public class TaskORM {
     private boolean mDone;
 
     @ToOne(joinProperty = "maccountId")
-    private AccountORM mAccountORM;
+    private Account mAccount;
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
@@ -108,7 +108,7 @@ public class TaskORM {
 
     /** To-one relationship, resolved on first access. */
     @Generated(hash = 1301010806)
-    public AccountORM getMAccountORM() {
+    public Account getMAccountORM() {
         Long __key = this.maccountId;
         if (mAccountORM__resolvedKey == null
                 || !mAccountORM__resolvedKey.equals(__key)) {
@@ -117,21 +117,21 @@ public class TaskORM {
                 throw new DaoException("Entity is detached from DAO context");
             }
             AccountORMDao targetDao = daoSession.getAccountORMDao();
-            AccountORM mAccountORMNew = targetDao.load(__key);
+            Account mAccountNew = targetDao.load(__key);
             synchronized (this) {
-                mAccountORM = mAccountORMNew;
+                mAccount = mAccountNew;
                 mAccountORM__resolvedKey = __key;
             }
         }
-        return mAccountORM;
+        return mAccount;
     }
 
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1792043731)
-    public void setMAccountORM(AccountORM mAccountORM) {
+    public void setMAccountORM(Account mAccount) {
         synchronized (this) {
-            this.mAccountORM = mAccountORM;
-            maccountId = mAccountORM == null ? null : mAccountORM.getId();
+            this.mAccount = mAccount;
+            maccountId = mAccount == null ? null : mAccount.getId();
             mAccountORM__resolvedKey = maccountId;
         }
     }

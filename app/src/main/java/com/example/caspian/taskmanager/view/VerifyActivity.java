@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.caspian.taskmanager.R;
-import com.example.caspian.taskmanager.model.Account;
+import com.example.caspian.taskmanager.model.AccountLab;
 
 import java.util.UUID;
 
@@ -25,9 +25,9 @@ public class VerifyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify);
-        Log.i("back<", "onCreate: verify " + Account.isIsGUess());
+        Log.i("back<", "onCreate: verify " + AccountLab.isIsGUess());
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (Account.isIsGUess())
+        if (AccountLab.isIsGUess())
             fragmentManager.beginTransaction()
                     .replace(R.id.verify_container, SignUpFragment.newInstance((UUID) getIntent().getSerializableExtra(ID)))
                     .commit();

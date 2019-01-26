@@ -17,7 +17,6 @@ import android.view.View;
 
 import com.example.caspian.taskmanager.CallBack;
 import com.example.caspian.taskmanager.R;
-import com.example.caspian.taskmanager.model.Account;
 import com.example.caspian.taskmanager.model.AccountLab;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
@@ -139,16 +138,16 @@ public class ListActivity extends AppCompatActivity implements CallBack {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("vasaaaa", "onDestroy: " + Account.isIsGUess());
-        if (Account.isIsGUess())
+        Log.i("vasaaaa", "onDestroy: " + AccountLab.isIsGUess());
+        if (AccountLab.isIsGUess())
             mAccountLab.getInstance(this).removeAccount((UUID) getIntent().getSerializableExtra(ACCOUNTID));
-        Account.setIsGUess(false);
+        AccountLab.setIsGUess(false);
 
     }
 
     @Override
     public void onBackPressed() {
-        if (Account.isIsGUess() && mTaskList.size() != 0) {
+        if (AccountLab.isIsGUess() && mTaskList.size() != 0) {
             AlertDialog.Builder alert = new AlertDialog.Builder(ListActivity.this);
             alert.setTitle("Warning!")
                     .setMessage("if you exit without sign up your tasks won't save")

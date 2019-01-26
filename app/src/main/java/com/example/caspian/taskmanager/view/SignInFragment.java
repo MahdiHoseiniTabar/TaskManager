@@ -15,8 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.caspian.taskmanager.R;
-import com.example.caspian.taskmanager.model.Account;
 import com.example.caspian.taskmanager.model.AccountLab;
+import com.example.caspian.taskmanager.model.Account;
 
 
 /**
@@ -63,7 +63,7 @@ public class SignInFragment extends Fragment {
 
                 }else {
                     mAccountLab.setAccountId(mAccount);
-                    Account.setIsGUess(false);
+                    AccountLab.setIsGUess(false);
                     startActivity(ListActivity.newIntent(getActivity(), mAccount.getAccountId()));
                 }
             }
@@ -72,7 +72,7 @@ public class SignInFragment extends Fragment {
         btn_guess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Account.setIsGUess(true);
+                AccountLab.setIsGUess(true);
                 Account mAccount = new Account();
                 mAccount.setPassword("guess");
                 mAccount.setUsername("guess");

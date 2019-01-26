@@ -11,6 +11,7 @@ import com.example.caspian.taskmanager.database.TaskDbSchema;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListResourceBundle;
 import java.util.UUID;
 
 //singleton Repository
@@ -52,8 +53,6 @@ public class TaskLab {
         mDatabase.insert(TaskDbSchema.Task.NAME, null, values);
 
     }
-
-
 
 
     private ContentValues getContentValues(Task task) {
@@ -122,8 +121,8 @@ public class TaskLab {
                 , new String[]{task.getId().toString()});
     }
 
-    public void deleteAllTask(){
-        mDatabase.delete(TaskDbSchema.Task.NAME,TaskDbSchema.Task.TaskCols.ACCOUNTID +" = ? ",new String[]{AccountLab.accountId.toString()});
+    public void deleteAllTask() {
+        mDatabase.delete(TaskDbSchema.Task.NAME, TaskDbSchema.Task.TaskCols.ACCOUNTID + " = ? ", new String[]{AccountLab.accountId.toString()});
     }
 
     public void editTask(Task newTask, Task oldTask) {
@@ -137,6 +136,29 @@ public class TaskLab {
                 , new String[]{oldTask.getId().toString()});
     }
 
+    public List<Task> searchTask(String search) {
+        List<Task> taskList = new ArrayList<>();
+        Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.ACCOUNTID +
+                        " = ? " + " AND " + TaskDbSchema.Task.TaskCols.TITLE + " = ? "
+                        + " OR " + TaskDbSchema.Task.TaskCols.DESCRIPTION + " = ? ", new String[]{AccountLab.accountId.toString(),search,search},
+                null,
+                null,
+                null);
+        cursorWraper = new TaskCursorWraper(cursor);
+        try {
+            if (cursorWraper.getCount() == 0)
+                return taskList;
+            cursorWraper.moveToFirst();
+            while (!cursorWraper.isAfterLast()) {
+                taskList.add(cursorWraper.getTask());
+                cursorWraper.moveToNext();
+            }
+        } finally {
+            cursorWraper.close();
+        }
+        return taskList;
+
+    }
 
 
 }

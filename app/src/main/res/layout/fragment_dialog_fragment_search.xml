@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".DialogFragmentSearch">
+<EditText
+    android:id="@+id/editText_search"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Search on title or description"
+    />
+    <Button
+        android:id="@+id/button_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="@color/colorPrimary"
+        android:layout_margin="4dp"
+        style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"
+        android:text= "Search"
+        />
+
+
+</LinearLayout>

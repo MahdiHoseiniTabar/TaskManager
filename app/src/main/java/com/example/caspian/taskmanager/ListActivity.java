@@ -140,12 +140,12 @@ public class ListActivity extends AppCompatActivity implements CallBack {
         Log.i("vasaaaa", "onDestroy: " + Account.isIsGUess());
         if (Account.isIsGUess())
             mAccountLab.getInstance(this).removeAccount((UUID) getIntent().getSerializableExtra(ACCOUNTID));
+        Account.setIsGUess(false);
 
     }
 
     @Override
     public void onBackPressed() {
-
         if (Account.isIsGUess() && mTaskList.size() != 0) {
             AlertDialog.Builder alert = new AlertDialog.Builder(ListActivity.this);
             alert.setTitle("Warning!")

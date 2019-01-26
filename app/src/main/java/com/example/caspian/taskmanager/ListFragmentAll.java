@@ -1,8 +1,10 @@
 package com.example.caspian.taskmanager;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
@@ -34,12 +37,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ListFragmentAll extends Fragment {
     public static final String POSISION = "com.example.caspian.taskmanager.posision";
+    public static final int REQ_CODE_SEARCH = 1;
     public static final int REQ_CODE = 0;
     private RecyclerView mRecyclerView;
     private TaskAdapter mTaskAdapter;
     private TaskLab mTaskLab;
     private List<Task> mTaskList;
     private int posision;
+    private boolean isSearch = false;
 
 
     public static ListFragmentAll newInstance(int posision) {
@@ -89,7 +94,6 @@ public class ListFragmentAll extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
         if (posision == 0)
             mTaskList = mTaskLab.getTaskList();
         Log.i("<<<?", "onResume: " + mTaskList.size());
@@ -107,22 +111,23 @@ public class ListFragmentAll extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        inflater.inflate(R.menu.fragment_list,menu);
-       // MenuItem item = menu.findItem(R.id.delete_task);
+        inflater.inflate(R.menu.fragment_list, menu);
+        // MenuItem item = menu.findItem(R.id.delete_task);
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.delete_task){
+        if (item.getItemId() == R.id.delete_task) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
             alertDialog.setTitle("Are you sure to delete all Tasks")
                     .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             mTaskLab.deleteAllTask();
-                           CallBack callBack = (CallBack) getActivity();
-                           callBack.callBack();
+                            CallBack callBack = (CallBack) getActivity();
+                            callBack.callBack();
                         }
                     })
                     .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -133,10 +138,38 @@ public class ListFragmentAll extends Fragment {
                     })
                     .show();
             return true;
+        } else if (item.getItemId() == R.id.search_task) {
+          /*  DialogFragmentSearch dialogFragmentSearch = DialogFragmentSearch.newInstance();
+            dialogFragmentSearch.setTargetFragment(ListFragmentAll.this, REQ_CODE_SEARCH);
+            dialogFragmentSearch.show(getFragmentManager(), "dialog");*/
         }
         return false;
 
+
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK)
+            return;
+        if (requestCode == REQ_CODE_SEARCH) {
+            List<Task> taskList = mTaskLab.searchTask(data.getStringExtra(DialogFragmentSearch.TEXT_SEARCH));
+            isSearch = data.getBooleanExtra(DialogFragmentSearch.SEARCH, false);
+            if (mTaskList.size() != 0) {
+                Toast.makeText(getActivity(), "tasks found! Press Back to out of search", Toast.LENGTH_LONG).show();
+                mTaskAdapter.setTaskList(taskList);
+                mTaskAdapter.notifyDataSetChanged();
+            }
+            if (mTaskList.size()  == 0) {
+                Toast.makeText(getActivity(), "any task not found!", Toast.LENGTH_LONG).show();
+                isSearch = false;
+            }
+            isSearch = data.getBooleanExtra(DialogFragmentSearch.SEARCH, false);
+        }
+    }
+
+
 
     public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Taskholder> {
 
@@ -178,7 +211,7 @@ public class ListFragmentAll extends Fragment {
         public class Taskholder extends RecyclerView.ViewHolder {
             public RelativeLayout root;
             private CircleImageView mCircleImageView;
-           // private TextView icon;
+            // private TextView icon;
             private TextView title;
             private TextView date;
             private Button edit;
@@ -187,16 +220,16 @@ public class ListFragmentAll extends Fragment {
                 super(itemView);
                 root = itemView.findViewById(R.id.root_element);
                 mCircleImageView = itemView.findViewById(R.id.item_list_all_circle_image);
-               // icon = itemView.findViewById(R.id.circle_image_text);
+                // icon = itemView.findViewById(R.id.circle_image_text);
                 title = itemView.findViewById(R.id.item_list_all_title);
                 date = itemView.findViewById(R.id.item_list_all_date);
                 edit = itemView.findViewById(R.id.button_edit_list);
             }
 
             public void bind(final Task task) {
-               // mCircleImageView.setCircleBackgroundColor(Color.BLACK);
+                // mCircleImageView.setCircleBackgroundColor(Color.BLACK);
                 mCircleImageView.setImageResource(R.drawable.task);
-              //  icon.setText(task.getTitle());
+                //  icon.setText(task.getTitle());
                 title.setText(task.getTitle());
                 date.setText(task.dateToString());
                 edit.setOnClickListener(new View.OnClickListener() {

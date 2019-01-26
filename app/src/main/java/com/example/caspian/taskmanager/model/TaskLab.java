@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.caspian.taskmanager.App;
 import com.example.caspian.taskmanager.database.TaskBaseHelper;
 import com.example.caspian.taskmanager.database.TaskCursorWraper;
 import com.example.caspian.taskmanager.database.TaskDbSchema;
@@ -22,6 +23,7 @@ public class TaskLab {
     private static SQLiteDatabase mDatabase;
     private Context mContext;
     private static TaskCursorWraper cursorWraper;
+    private TaskORMDao taskDao;
 
 
     public static TaskLab getmInstance(Context context) {
@@ -31,8 +33,10 @@ public class TaskLab {
     }
 
     private TaskLab(Context context) {
-        mContext = context;
-        mDatabase = new TaskBaseHelper(mContext).getWritableDatabase();
+        /*mContext = context;
+        mDatabase = new TaskBaseHelper(mContext).getWritableDatabase();*/
+        DaoSession daoSession = (App.getApp()).getDaoSession();
+        taskDao = daoSession.getTaskORMDao();
     }
 
     public static List<Task> getmTaskList() {

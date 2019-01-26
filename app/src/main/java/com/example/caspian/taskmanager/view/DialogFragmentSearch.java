@@ -1,4 +1,4 @@
-package com.example.caspian.taskmanager;
+package com.example.caspian.taskmanager.view;
 
 
 import android.app.Activity;
@@ -12,11 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.caspian.taskmanager.database.TaskDbSchema;
-import com.example.caspian.taskmanager.model.Task;
-import com.example.caspian.taskmanager.model.TaskLab;
-
-import java.util.List;
+import com.example.caspian.taskmanager.CallBack;
+import com.example.caspian.taskmanager.R;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.example.caspian.taskmanager;
+package com.example.caspian.taskmanager.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.caspian.taskmanager.R;
 import com.example.caspian.taskmanager.model.Account;
 
 import java.util.UUID;

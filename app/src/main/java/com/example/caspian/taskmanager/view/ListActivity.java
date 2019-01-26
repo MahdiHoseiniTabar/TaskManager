@@ -1,4 +1,4 @@
-package com.example.caspian.taskmanager;
+package com.example.caspian.taskmanager.view;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.caspian.taskmanager.CallBack;
+import com.example.caspian.taskmanager.R;
 import com.example.caspian.taskmanager.model.Account;
 import com.example.caspian.taskmanager.model.AccountLab;
 import com.example.caspian.taskmanager.model.Task;

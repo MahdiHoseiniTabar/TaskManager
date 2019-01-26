@@ -1,4 +1,4 @@
-package com.example.caspian.taskmanager;
+package com.example.caspian.taskmanager.view;
 
 
 import android.app.Activity;
@@ -13,6 +13,8 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
+
+import com.example.caspian.taskmanager.R;
 
 import java.util.Calendar;
 import java.util.Date;

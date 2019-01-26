@@ -1,26 +1,19 @@
-package com.example.caspian.taskmanager;
+package com.example.caspian.taskmanager.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.caspian.taskmanager.database.TaskDbSchema;
+import com.example.caspian.taskmanager.R;
 import com.example.caspian.taskmanager.model.Account;
 import com.example.caspian.taskmanager.model.AccountLab;
-import com.example.caspian.taskmanager.model.Task;
-import com.example.caspian.taskmanager.model.TaskLab;
 
-import java.util.List;
 import java.util.UUID;
 
 

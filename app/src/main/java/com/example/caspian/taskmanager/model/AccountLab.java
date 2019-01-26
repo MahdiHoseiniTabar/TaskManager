@@ -7,6 +7,7 @@ import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.caspian.taskmanager.App;
 import com.example.caspian.taskmanager.database.TaskBaseHelper;
 import com.example.caspian.taskmanager.database.TaskCursorWraper;
 import com.example.caspian.taskmanager.database.TaskDbSchema;
@@ -21,6 +22,7 @@ public class AccountLab {
     private Context mContext;
     private static TaskCursorWraper cursorWraper;
     public static Integer accountId;
+    private AccountORMDao accountDao;
 
     public static AccountLab getInstance(Context context) {
         if (mInstance == null)
@@ -29,8 +31,10 @@ public class AccountLab {
     }
 
     private AccountLab(Context context) {
-        mContext = context.getApplicationContext();
-        mDatabase = new TaskBaseHelper(mContext).getWritableDatabase();
+        /*mContext = context.getApplicationContext();
+        mDatabase = new TaskBaseHelper(mContext).getWritableDatabase();*/
+        DaoSession daoSession = (App.getApp()).getDaoSession();
+        accountDao = daoSession.getAccountORMDao();
 
     }
     public boolean accountIsExist(Account account){
@@ -44,9 +48,11 @@ public class AccountLab {
         }
     }
 
-    public void addAccount(Account account) {
-        ContentValues values = getContentValue(account);
-        mDatabase.insert(TaskDbSchema.Account.NAME, null, values);
+    public void addAccount(AccountORM account) {
+        /*ContentValues values = getContentValue(account);
+        mDatabase.insert(TaskDbSchema.Account.NAME, null, values);*/
+
+        accountDao.insert(account);
     }
 
     public void setAccountId(Account account) {

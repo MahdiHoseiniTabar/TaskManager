@@ -1,4 +1,4 @@
-package com.example.caspian.taskmanager;
+package com.example.caspian.taskmanager.view;
 
 
 import android.os.Bundle;

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:padding="16dp"
-    tools:context=".DialogFragmentAdd"
+    tools:context=".view.DialogFragmentAdd"
     >
 
 

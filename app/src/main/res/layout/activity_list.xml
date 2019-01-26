@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FAFAFA"
 
-    tools:context=".ListActivity">
+    tools:context=".view.ListActivity">
 
 
     <android.support.design.widget.TabLayout

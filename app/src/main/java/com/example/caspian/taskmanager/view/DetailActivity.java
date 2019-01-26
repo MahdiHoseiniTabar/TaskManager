@@ -1,8 +1,10 @@
-package com.example.caspian.taskmanager;
+package com.example.caspian.taskmanager.view;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.caspian.taskmanager.R;
 
 import java.util.UUID;
 

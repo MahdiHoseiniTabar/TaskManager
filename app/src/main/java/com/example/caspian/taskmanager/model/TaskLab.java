@@ -174,6 +174,8 @@ public class TaskLab {
         } finally {
             cursorWraper.close();
         }*/
+        taskList = taskDao.queryBuilder().where(TaskDao.Properties.MaccountId.eq(AccountLab.accountId))
+                .whereOr(TaskDao.Properties.MDescribtion.like(search),TaskDao.Properties.MTitle.like(search)).list() ;
         return taskList;
 
     }

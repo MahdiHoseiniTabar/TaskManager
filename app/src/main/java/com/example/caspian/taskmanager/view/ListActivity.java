@@ -24,7 +24,7 @@ import com.example.caspian.taskmanager.model.TaskLab;
 import java.util.List;
 import java.util.UUID;
 
-public class ListActivity extends AppCompatActivity implements CallBack {
+public class ListActivity extends AppCompatActivity implements CallBack,ListFragmentAll.Callback {
     public static final String ACCOUNTID = "com.example.caspian.taskmanager.accId";
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -173,5 +173,15 @@ public class ListActivity extends AppCompatActivity implements CallBack {
     @Override
     public void callBack() {
         this.onResume();
+    }
+
+    @Override
+    public void show() {
+        mFloatingActionButton.show();
+    }
+
+    @Override
+    public void hide() {
+        mFloatingActionButton.hide();
     }
 }

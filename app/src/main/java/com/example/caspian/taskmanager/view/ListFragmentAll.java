@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,8 +48,8 @@ public class ListFragmentAll extends Fragment {
     private TaskLab mTaskLab;
     private List<Task> mTaskList;
     private int posision;
-    private boolean isSearch = false;
-
+    private boolean show_floating_button = true;
+    private Callback mCallback;
 
     public static ListFragmentAll newInstance(int posision) {
 
@@ -61,6 +62,18 @@ public class ListFragmentAll extends Fragment {
 
     public ListFragmentAll() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallback = (Callback) getActivity();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallback = null;
     }
 
     @Override
@@ -142,9 +155,18 @@ public class ListFragmentAll extends Fragment {
                     .show();
             return true;
         } else if (item.getItemId() == R.id.search_task) {
-          /*  DialogFragmentSearch dialogFragmentSearch = DialogFragmentSearch.newInstance();
-            dialogFragmentSearch.setTargetFragment(ListFragmentAll.this, REQ_CODE_SEARCH);
-            dialogFragmentSearch.show(getFragmentManager(), "dialog");*/
+            startActivity(new Intent(getActivity(),SearchActivity.class));
+        }else if(item.getItemId() == R.id.hide_fb){
+            if (!show_floating_button) {
+                mCallback.show();
+                item.setTitle("Hide Floating Button");
+                show_floating_button = true;
+            }
+            else {
+                mCallback.hide();
+                item.setTitle("Show Floating Button");
+                show_floating_button = false;
+            }
         }
         return false;
 
@@ -157,7 +179,7 @@ public class ListFragmentAll extends Fragment {
         if (resultCode != Activity.RESULT_OK)
             return;
         if (requestCode == REQ_CODE_SEARCH) {
-            List<Task> taskList = mTaskLab.searchTask(data.getStringExtra(DialogFragmentSearch.TEXT_SEARCH));
+            /*List<Task> taskList = mTaskLab.searchTask(data.getStringExtra(DialogFragmentSearch.TEXT_SEARCH));
             isSearch = data.getBooleanExtra(DialogFragmentSearch.SEARCH, false);
             if (mTaskList.size() != 0) {
                 Toast.makeText(getActivity(), "tasks found! Press Back to out of search", Toast.LENGTH_LONG).show();
@@ -168,7 +190,7 @@ public class ListFragmentAll extends Fragment {
                 Toast.makeText(getActivity(), "any task not found!", Toast.LENGTH_LONG).show();
                 isSearch = false;
             }
-            isSearch = data.getBooleanExtra(DialogFragmentSearch.SEARCH, false);
+            isSearch = data.getBooleanExtra(DialogFragmentSearch.SEARCH, false);*/
         }
     }
 
@@ -274,5 +296,9 @@ public class ListFragmentAll extends Fragment {
 
         }
 
+    }
+    interface Callback{
+        void show();
+        void hide();
     }
 }

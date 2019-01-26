@@ -79,7 +79,7 @@ public class DialogFragmentEdit extends DialogFragment {
         txt_title.setText(mTask.getTitle());
         btn_date.setText(mTask.dateToString());
         txt_discribtion.setText(mTask.getDescribtion());
-        chk_done.setChecked(mTask.isDone());
+        chk_done.setChecked(mTask.getMDone());
 
         btn_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +104,7 @@ public class DialogFragmentEdit extends DialogFragment {
                             Task newTask = new Task();
                             newTask.setTitle(txt_title.getText().toString());
                             newTask.setDescribtion(txt_discribtion.getText().toString());
-                            newTask.setDone(chk_done.isChecked());
+                            newTask.setMDone(chk_done.isChecked());
                             if (flag)
                                 newTask.setDate(date);
                             mTaskLab.editTask(newTask, mTask);

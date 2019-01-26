@@ -3,6 +3,7 @@ package com.example.caspian.taskmanager.model;
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.Unique;
 
 import java.util.UUID;
@@ -19,14 +20,14 @@ public class Account {
     @Unique
     private String Username;
     private String Password;
-    @Generated(hash = 600756919)
+    @Generated(hash = 936493751)
     public Account(Long id, UUID AccountId, String Username, String Password) {
         this.id = id;
         this.AccountId = AccountId;
         this.Username = Username;
         this.Password = Password;
     }
-    @Generated(hash = 214225843)
+    @Keep
     public Account() {
         AccountId = UUID.randomUUID();
     }

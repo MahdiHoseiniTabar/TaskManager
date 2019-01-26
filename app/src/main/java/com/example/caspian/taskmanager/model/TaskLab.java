@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.caspian.taskmanager.App;
 import com.example.caspian.taskmanager.database.TaskBaseHelper;
@@ -23,7 +24,7 @@ public class TaskLab {
     private static SQLiteDatabase mDatabase;
     private Context mContext;
     private static TaskCursorWraper cursorWraper;
-    private TaskORMDao taskDao;
+    private static TaskDao taskDao;
 
 
     public static TaskLab getmInstance(Context context) {
@@ -36,7 +37,7 @@ public class TaskLab {
         /*mContext = context;
         mDatabase = new TaskBaseHelper(mContext).getWritableDatabase();*/
         DaoSession daoSession = (App.getApp()).getDaoSession();
-        taskDao = daoSession.getTaskORMDao();
+        taskDao = daoSession.getTaskDao();
     }
 
     public static List<Task> getmTaskList() {
@@ -53,9 +54,10 @@ public class TaskLab {
         if (task.isDone())
             mDoneTaskList.add(task);
         mHashMap.put(task.getId(),task);*/
-        ContentValues values = getContentValues(task);
-        mDatabase.insert(TaskDbSchema.Task.NAME, null, values);
-
+        /*ContentValues values = getContentValues(task);
+        mDatabase.insert(TaskDbSchema.Task.NAME, null, values);*/
+        taskDao.insert(task);
+        Log.i("+++", "addTask: "+ task.getTitle());
     }
 
 
@@ -65,7 +67,7 @@ public class TaskLab {
         values.put(TaskDbSchema.Task.TaskCols.TITLE, task.getTitle());
         values.put(TaskDbSchema.Task.TaskCols.DESCRIPTION, task.getDescribtion());
         values.put(TaskDbSchema.Task.TaskCols.DATE, task.getDate().getTime());
-        values.put(TaskDbSchema.Task.TaskCols.ISDONE, task.isDone() ? 1 : 0);
+        values.put(TaskDbSchema.Task.TaskCols.ISDONE, task.getMDone() ? 1 : 0);
         values.put(TaskDbSchema.Task.TaskCols.ACCOUNTID, task.getMaccountId().toString());
         return values;
     }
@@ -73,7 +75,7 @@ public class TaskLab {
     public static List<Task> getTaskList() {
         mTaskList = new ArrayList<>();
 
-        Cursor cursor = mDatabase.rawQuery("SELECT * from " + TaskDbSchema.Task.NAME + " WHERE " + TaskDbSchema.Task.TaskCols.ACCOUNTID
+        /*Cursor cursor = mDatabase.rawQuery("SELECT * from " + TaskDbSchema.Task.NAME + " WHERE " + TaskDbSchema.Task.TaskCols.ACCOUNTID
                 + " = ? ", new String[]{AccountLab.accountId.toString()});
         cursorWraper = new TaskCursorWraper(cursor);
         try {
@@ -87,20 +89,22 @@ public class TaskLab {
         } finally {
             cursorWraper.close();
         }
-        return getmTaskList();
+        return getmTaskList();*/
+        mTaskList = taskDao.queryBuilder().where(TaskDao.Properties.MaccountId.eq(AccountLab.accountId)).list() ;
+        return mTaskList;
     }
 
     public static List<Task> getDoneTaskList() {
         mDoneTaskList = new ArrayList<>();
         for (int i = 0; i < getmTaskList().size(); i++) {
-            if (getmTaskList().get(i).isDone())
+            if (getmTaskList().get(i).getMDone())
                 mDoneTaskList.add(getmTaskList().get(i));
         }
         return mDoneTaskList;
     }
 
     public Task getTask(UUID id) {
-        Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.UUID + " = ? ",
+        /*Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.UUID + " = ? ",
                 new String[]{id.toString()}, null, null, null);
         TaskCursorWraper cursorWraper = new TaskCursorWraper(cursor);
         try {
@@ -110,7 +114,8 @@ public class TaskLab {
             return cursorWraper.getTask();
         } finally {
             cursorWraper.close();
-        }
+        }*/
+        return taskDao.queryBuilder().where(TaskDao.Properties.MId.eq(id)).unique();
     }
 
     public Task getTask(int position, List<Task> tasks) {
@@ -121,12 +126,16 @@ public class TaskLab {
         /*mTaskList.remove(task);
         if (task.isDone())
             mDoneTaskList.remove(task);*/
-        mDatabase.delete(TaskDbSchema.Task.NAME, TaskDbSchema.Task.TaskCols.UUID + " = ? "
-                , new String[]{task.getId().toString()});
+        /*mDatabase.delete(TaskDbSchema.Task.NAME, TaskDbSchema.Task.TaskCols.UUID + " = ? "
+                , new String[]{task.getId().toString()});*/
+        taskDao.delete(task);
     }
 
     public void deleteAllTask() {
-        mDatabase.delete(TaskDbSchema.Task.NAME, TaskDbSchema.Task.TaskCols.ACCOUNTID + " = ? ", new String[]{AccountLab.accountId.toString()});
+      //  mDatabase.delete(TaskDbSchema.Task.NAME, TaskDbSchema.Task.TaskCols.ACCOUNTID + " = ? ", new String[]{AccountLab.accountId.toString()});
+        for (int i = 0; i < mTaskList.size() ; i++) {
+            deleteTask(mTaskList.get(i));
+        }
     }
 
     public void editTask(Task newTask, Task oldTask) {
@@ -136,13 +145,18 @@ public class TaskLab {
         if (newTask.isDone())
             mDoneTaskList.add(newTask);
         mHashMap.put(newTask.getId(), newTask);*/
-        mDatabase.update(TaskDbSchema.Task.NAME, getContentValues(newTask), TaskDbSchema.Task.TaskCols.UUID + " = ? "
-                , new String[]{oldTask.getId().toString()});
+       /* mDatabase.update(TaskDbSchema.Task.NAME, getContentValues(newTask), TaskDbSchema.Task.TaskCols.UUID + " = ? "
+                , new String[]{oldTask.getId().toString()});*/
+       oldTask.setTitle(newTask.getTitle());
+       oldTask.setDescribtion(newTask.getDescribtion());
+       oldTask.setDate(newTask.getMDate());
+       oldTask.setMDone(newTask.getMDone());
+       taskDao.update(oldTask);
     }
 
     public List<Task> searchTask(String search) {
         List<Task> taskList = new ArrayList<>();
-        Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.ACCOUNTID +
+       /* Cursor cursor = mDatabase.query(TaskDbSchema.Task.NAME, null, TaskDbSchema.Task.TaskCols.ACCOUNTID +
                         " = ? " + " AND " + TaskDbSchema.Task.TaskCols.TITLE + " = ? "
                         + " OR " + TaskDbSchema.Task.TaskCols.DESCRIPTION + " = ? ", new String[]{AccountLab.accountId.toString(),search,search},
                 null,
@@ -159,7 +173,7 @@ public class TaskLab {
             }
         } finally {
             cursorWraper.close();
-        }
+        }*/
         return taskList;
 
     }

@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.caspian.taskmanager.R;
+
 
 /**
  * A simple {@link Fragment} subclass.

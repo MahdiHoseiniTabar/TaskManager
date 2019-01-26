@@ -11,9 +11,7 @@ public class App extends Application {
     private static App app;
     private DaoSession mDaoSession;
 
-    public static App getApp() {
-        return app;
-    }
+
 
     @Override
     public void onCreate() {
@@ -21,10 +19,12 @@ public class App extends Application {
 
         MyDevOpenHelper myDevOpenHelper = new MyDevOpenHelper(this, "DatabaseName");
         Database db = myDevOpenHelper.getWritableDb();
-
        mDaoSession = new DaoMaster(db).newSession();
 
         app = this;
+    }
+    public static App getApp() {
+        return app;
     }
 
     public DaoSession getDaoSession() {

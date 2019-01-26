@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.caspian.taskmanager.CallBack;
 import com.example.caspian.taskmanager.R;
+import com.example.caspian.taskmanager.model.AccountLab;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
 
@@ -98,7 +99,8 @@ public class DialogFragmentAdd extends DialogFragment {
                             Log.i(">>>>", "onClick: " + flag);
                             if (flag)
                                 task.setDate(date);
-                            task.setDone(chkbx_done.isChecked());
+                            task.setMDone(chkbx_done.isChecked());
+                            task.setMaccountId(AccountLab.accountId);
                             mTaskLab.addTask(task);
                             CallBack callBack = (CallBack) getActivity();
                             callBack.callBack();

@@ -237,7 +237,7 @@ public class ListFragmentAll extends Fragment {
                 edit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DialogFragmentEdit dialogFragmentEdit = DialogFragmentEdit.newInstance(task.getId());
+                        DialogFragmentEdit dialogFragmentEdit = DialogFragmentEdit.newInstance(task.getMId());
                         dialogFragmentEdit.setTargetFragment(ListFragmentAll.this, REQ_CODE);
                         dialogFragmentEdit.show(getFragmentManager(), "dialog");
                     }
@@ -246,7 +246,7 @@ public class ListFragmentAll extends Fragment {
                     @Override
                     public void onClick(View v) {
                         /*mContext.startActivity(DetailActivity.newIntent(mContext, task.getId()));*/
-                        DialogFragmentShow dialogFragmentShow = DialogFragmentShow.newInstance(task.getId());
+                        DialogFragmentShow dialogFragmentShow = DialogFragmentShow.newInstance(task.getMId());
                         dialogFragmentShow.show(getFragmentManager(), "dialog");
                     }
                 });

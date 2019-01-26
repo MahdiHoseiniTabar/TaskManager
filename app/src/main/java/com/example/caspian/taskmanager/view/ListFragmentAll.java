@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -216,7 +217,8 @@ public class ListFragmentAll extends Fragment {
             // private TextView icon;
             private TextView title;
             private TextView date;
-            private Button edit;
+            private ImageView edit;
+            private ImageView share;
 
             public Taskholder(View itemView) {
                 super(itemView);
@@ -226,6 +228,7 @@ public class ListFragmentAll extends Fragment {
                 title = itemView.findViewById(R.id.item_list_all_title);
                 date = itemView.findViewById(R.id.item_list_all_date);
                 edit = itemView.findViewById(R.id.button_edit_list);
+                share = itemView.findViewById(R.id.share);
             }
 
             public void bind(final Task task) {
@@ -250,6 +253,23 @@ public class ListFragmentAll extends Fragment {
                         dialogFragmentShow.show(getFragmentManager(), "dialog");
                     }
                 });
+                share.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_SEND);
+                        intent.putExtra(Intent.EXTRA_TEXT, getTaskText(task));
+                        intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.subject));
+                        intent.setType("text/plain");
+                        Intent intentFilter = Intent.createChooser(intent,getString(R.string.chooser));
+                        startActivity(intentFilter);
+                    }
+                });
+            }
+
+            private String getTaskText(Task task) {
+            String type = task.getMDone() ? getString(R.string.isDone) : getString(R.string.isNotDone);
+            return getString(R.string.taskText,task.getMTitle(),task.getMDescribtion(),task.dateToString(),type);
             }
 
         }

@@ -18,6 +18,8 @@ import com.example.caspian.taskmanager.R;
 import com.example.caspian.taskmanager.model.AccountLab;
 import com.example.caspian.taskmanager.model.Account;
 
+import java.util.UUID;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,8 +76,8 @@ public class SignInFragment extends Fragment {
             public void onClick(View v) {
                 AccountLab.setIsGUess(true);
                 Account mAccount = new Account();
-                mAccount.setPassword("guess");
-                mAccount.setUsername("guess");
+                mAccount.setPassword(UUID.randomUUID().toString());
+                mAccount.setUsername(UUID.randomUUID().toString());
                 mAccountLab.addAccount(mAccount);
                 mAccountLab.setAccountId(mAccount);
                 startActivity(ListActivity.newIntent(getActivity(), mAccount.getAccountId()));

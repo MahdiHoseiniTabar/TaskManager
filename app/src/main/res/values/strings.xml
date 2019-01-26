@@ -3,4 +3,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="subject">TaskManager share:</string>
+    <string name="taskText">task with title: %1$s \n which is described: %2$s \n to date: %3$s \n %4$s</string>
+    <string name="isDone">is Done</string>
+    <string name="isNotDone">is not Done</string>
+    <string name="chooser">send this task via:</string>
 </resources>

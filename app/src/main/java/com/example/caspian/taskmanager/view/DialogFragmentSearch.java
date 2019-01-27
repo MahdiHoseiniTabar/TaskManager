@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.caspian.taskmanager.PictureUtils;
 import com.example.caspian.taskmanager.R;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
@@ -176,7 +177,10 @@ public class DialogFragmentSearch extends Fragment {
 
             public void bind(final Task task,String text) {
                 // mCircleImageView.setCircleBackgroundColor(Color.BLACK);
-                mCircleImageView.setImageResource(R.drawable.task);
+                if (task.getPhotoAddress() == null)
+                    mCircleImageView.setImageResource(R.drawable.task);
+                else
+                    mCircleImageView.setImageBitmap(PictureUtils.getScaleBitmap(task.getPhotoAddress(), 40,40));
                 //  icon.setText(task.getTitle());
                 title.setText(task.getMTitle());
                 describe.setText(task.getMDescribtion());

@@ -13,8 +13,8 @@ public class PictureUtils {
         int srcHight = options.outHeight;
         int samplSize = 1;
         if (srcHight > destHeight || srcWith > destWith) {
-            float with = srcWith / destWith;
-            float hight = srcHight / destHeight;
+            float with = (srcWith / destWith)*10;
+            float hight = (srcHight / destHeight)*10;
             samplSize = Math.round((hight > with) ? hight : with);
         }
         options = new BitmapFactory.Options();

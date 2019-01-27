@@ -254,7 +254,7 @@ public class ListFragmentAll extends Fragment {
                 if (task.getPhotoAddress() == null)
                     mCircleImageView.setImageResource(R.drawable.task);
                 else
-                    mCircleImageView.setImageBitmap(PictureUtils.getScaleBitmap(task.getPhotoAddress(), getActivity()));
+                    mCircleImageView.setImageBitmap(PictureUtils.getScaleBitmap(task.getPhotoAddress(), 40,40));
                 //  icon.setText(task.getTitle());
                 title.setText(task.getMTitle());
                 date.setText(task.dateToString());
@@ -284,6 +284,13 @@ public class ListFragmentAll extends Fragment {
                         intent.setType("text/plain");
                         Intent intentFilter = Intent.createChooser(intent, getString(R.string.chooser));
                         startActivity(intentFilter);
+                    }
+                });
+                mCircleImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ShowIconFragment showIconFragment = ShowIconFragment.newInstance(task.getMId());
+                        showIconFragment.show(getFragmentManager(),"dialog");
                     }
                 });
             }

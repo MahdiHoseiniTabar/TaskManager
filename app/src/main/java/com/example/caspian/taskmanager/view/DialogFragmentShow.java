@@ -50,7 +50,7 @@ public class DialogFragmentShow extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TaskLab taskLab = TaskLab.getmInstance(getActivity());
-         mTask = taskLab.getTask((UUID) getArguments().getSerializable(TASKID));
+        mTask = taskLab.getTask((UUID) getArguments().getSerializable(TASKID));
     }
 
     @NonNull
@@ -58,12 +58,14 @@ public class DialogFragmentShow extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
 
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_detail_dialog,null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_detail_dialog, null);
         txt_discribtion = view.findViewById(R.id.describtion);
         txt_date = view.findViewById(R.id.date);
         photo = view.findViewById(R.id.imageViewshow);
-
-        photo.setImageBitmap(PictureUtils.getScaleBitmap(mTask.getPhotoAddress(),getActivity()));
+        if (mTask.getPhotoAddress() == null)
+            photo.setImageResource(R.drawable.task);
+        else
+            photo.setImageBitmap(PictureUtils.getScaleBitmap(mTask.getPhotoAddress(), 100, 100));
 
         txt_date.setText(mTask.dateToString());
         txt_discribtion.setText(mTask.getMDescribtion());

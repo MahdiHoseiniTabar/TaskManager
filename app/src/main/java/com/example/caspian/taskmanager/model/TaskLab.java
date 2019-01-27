@@ -57,7 +57,7 @@ public class TaskLab {
         /*ContentValues values = getContentValues(task);
         mDatabase.insert(TaskDbSchema.Task.NAME, null, values);*/
         taskDao.insert(task);
-        Log.i("+++", "addTask: "+ task.getTitle());
+        Log.i("+++", "addTask: " + task.getTitle());
     }
 
 
@@ -90,7 +90,7 @@ public class TaskLab {
             cursorWraper.close();
         }
         return getmTaskList();*/
-        mTaskList = taskDao.queryBuilder().where(TaskDao.Properties.MaccountId.eq(AccountLab.accountId)).list() ;
+        mTaskList = taskDao.queryBuilder().where(TaskDao.Properties.MaccountId.eq(AccountLab.accountId)).list();
         return mTaskList;
     }
 
@@ -132,8 +132,8 @@ public class TaskLab {
     }
 
     public void deleteAllTask() {
-      //  mDatabase.delete(TaskDbSchema.Task.NAME, TaskDbSchema.Task.TaskCols.ACCOUNTID + " = ? ", new String[]{AccountLab.accountId.toString()});
-        for (int i = 0; i < mTaskList.size() ; i++) {
+        //  mDatabase.delete(TaskDbSchema.Task.NAME, TaskDbSchema.Task.TaskCols.ACCOUNTID + " = ? ", new String[]{AccountLab.accountId.toString()});
+        for (int i = 0; i < mTaskList.size(); i++) {
             deleteTask(mTaskList.get(i));
         }
     }
@@ -147,11 +147,11 @@ public class TaskLab {
         mHashMap.put(newTask.getId(), newTask);*/
        /* mDatabase.update(TaskDbSchema.Task.NAME, getContentValues(newTask), TaskDbSchema.Task.TaskCols.UUID + " = ? "
                 , new String[]{oldTask.getId().toString()});*/
-       oldTask.setTitle(newTask.getTitle());
-       oldTask.setDescribtion(newTask.getDescribtion());
-       oldTask.setDate(newTask.getMDate());
-       oldTask.setMDone(newTask.getMDone());
-       taskDao.update(oldTask);
+        oldTask.setTitle(newTask.getTitle());
+        oldTask.setDescribtion(newTask.getDescribtion());
+        oldTask.setDate(newTask.getMDate());
+        oldTask.setMDone(newTask.getMDone());
+        taskDao.update(oldTask);
     }
 
     public List<Task> searchTask(String search) {
@@ -175,7 +175,8 @@ public class TaskLab {
             cursorWraper.close();
         }*/
         taskList = taskDao.queryBuilder().where(TaskDao.Properties.MaccountId.eq(AccountLab.accountId))
-                .whereOr(TaskDao.Properties.MDescribtion.like(search),TaskDao.Properties.MTitle.like(search)).list() ;
+                .whereOr(TaskDao.Properties.MDescribtion.like("%" + search + "%")
+                        , TaskDao.Properties.MTitle.like("%" + search + "%")).list();
         return taskList;
 
     }

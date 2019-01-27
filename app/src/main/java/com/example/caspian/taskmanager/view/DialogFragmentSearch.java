@@ -3,6 +3,7 @@ package com.example.caspian.taskmanager.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +11,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -109,6 +112,7 @@ public class DialogFragmentSearch extends Fragment {
             mTaskList = mTaskLab.getTaskList();
         else
             mTaskList = mTaskLab.searchTask(s);
+        mTaskAdapter.setText(s);
         mTaskAdapter.setTaskList(mTaskList);
         mTaskAdapter.notifyDataSetChanged();
     }
@@ -118,6 +122,7 @@ public class DialogFragmentSearch extends Fragment {
 
         private List<Task> mTaskList;
         private Context mContext;
+        private String text = "";
 
 
         public TaskAdapter(List<Task> taskList, Context context) {
@@ -137,7 +142,7 @@ public class DialogFragmentSearch extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull DialogFragmentSearch.TaskAdapter.Taskholder holder, int position) {
             Task task = mTaskList.get(position);
-            holder.bind(task);
+            holder.bind(task,text);
 
         }
 
@@ -148,6 +153,10 @@ public class DialogFragmentSearch extends Fragment {
 
         public void setTaskList(List<Task> taskList) {
             this.mTaskList = taskList;
+        }
+
+        public void setText(String text) {
+            this.text = text;
         }
 
 
@@ -169,12 +178,14 @@ public class DialogFragmentSearch extends Fragment {
 
             }
 
-            public void bind(final Task task) {
+            public void bind(final Task task,String text) {
                 // mCircleImageView.setCircleBackgroundColor(Color.BLACK);
                 mCircleImageView.setImageResource(R.drawable.task);
                 //  icon.setText(task.getTitle());
                 title.setText(task.getMTitle());
                 describe.setText(task.getMDescribtion());
+                bold(task.getMTitle(),text,title);
+                bold(task.getDescribtion(),text,describe);
                 root.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -183,6 +194,18 @@ public class DialogFragmentSearch extends Fragment {
                         dialogFragmentShow.show(getFragmentManager(), "dialog");
                     }
                 });
+            }
+
+            private void bold(String sentence, String text,TextView textView) {
+                if (!text.equals("")) {
+                    if (sentence.contains(text)) {
+                        int start = sentence.indexOf(text);
+                        int end = start + text.length();
+                        SpannableStringBuilder fancySentence = new SpannableStringBuilder(sentence);
+                        fancySentence.setSpan(new android.text.style.StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        textView.setText(fancySentence);
+                    }
+                }
             }
         }
     }

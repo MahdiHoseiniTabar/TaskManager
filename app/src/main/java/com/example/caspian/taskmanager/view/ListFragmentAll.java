@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,13 +19,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.caspian.taskmanager.CallBack;
+import com.example.caspian.taskmanager.PictureUtils;
 import com.example.caspian.taskmanager.R;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
@@ -155,14 +153,13 @@ public class ListFragmentAll extends Fragment {
                     .show();
             return true;
         } else if (item.getItemId() == R.id.search_task) {
-            startActivity(new Intent(getActivity(),SearchActivity.class));
-        }else if(item.getItemId() == R.id.hide_fb){
+            startActivity(new Intent(getActivity(), SearchActivity.class));
+        } else if (item.getItemId() == R.id.hide_fb) {
             if (!show_floating_button) {
                 mCallback.show();
                 item.setTitle("Hide Floating Button");
                 show_floating_button = true;
-            }
-            else {
+            } else {
                 mCallback.hide();
                 item.setTitle("Show Floating Button");
                 show_floating_button = false;
@@ -193,7 +190,6 @@ public class ListFragmentAll extends Fragment {
             isSearch = data.getBooleanExtra(DialogFragmentSearch.SEARCH, false);*/
         }
     }
-
 
 
     public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Taskholder> {
@@ -255,9 +251,12 @@ public class ListFragmentAll extends Fragment {
 
             public void bind(final Task task) {
                 // mCircleImageView.setCircleBackgroundColor(Color.BLACK);
-                mCircleImageView.setImageResource(R.drawable.task);
+                if (task.getPhotoAddress() == null)
+                    mCircleImageView.setImageResource(R.drawable.task);
+                else
+                    mCircleImageView.setImageBitmap(PictureUtils.getScaleBitmap(task.getPhotoAddress(), getActivity()));
                 //  icon.setText(task.getTitle());
-                title.setText(task.getTitle());
+                title.setText(task.getMTitle());
                 date.setText(task.dateToString());
                 edit.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -281,24 +280,26 @@ public class ListFragmentAll extends Fragment {
                         Intent intent = new Intent();
                         intent.setAction(Intent.ACTION_SEND);
                         intent.putExtra(Intent.EXTRA_TEXT, getTaskText(task));
-                        intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.subject));
+                        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.subject));
                         intent.setType("text/plain");
-                        Intent intentFilter = Intent.createChooser(intent,getString(R.string.chooser));
+                        Intent intentFilter = Intent.createChooser(intent, getString(R.string.chooser));
                         startActivity(intentFilter);
                     }
                 });
             }
 
             private String getTaskText(Task task) {
-            String type = task.getMDone() ? getString(R.string.isDone) : getString(R.string.isNotDone);
-            return getString(R.string.taskText,task.getMTitle(),task.getMDescribtion(),task.dateToString(),type);
+                String type = task.getMDone() ? getString(R.string.isDone) : getString(R.string.isNotDone);
+                return getString(R.string.taskText, task.getMTitle(), task.getMDescribtion(), task.dateToString(), type);
             }
 
         }
 
     }
-    interface Callback{
+
+    interface Callback {
         void show();
+
         void hide();
     }
 }

@@ -34,10 +34,10 @@ public class TaskCursorWraper extends CursorWrapper {
         Date date =new Date(getLong(getColumnIndex(TaskDbSchema.Task.TaskCols.DATE)));
         boolean isDone = getInt(getColumnIndex(TaskDbSchema.Task.TaskCols.ISDONE)) != 0;
         Task task = new Task(/*id*/);
-        task.setTitle(title);
+        task.setMTitle(title);
         task.setMDone(isDone);
-        task.setDescribtion(description);
-        task.setDate(date);
+        task.setMDescribtion(description);
+        task.setMDate(date);
         return task;
     }
 }

@@ -11,8 +11,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.caspian.taskmanager.PictureUtils;
 import com.example.caspian.taskmanager.R;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
@@ -27,6 +29,7 @@ public class DialogFragmentShow extends DialogFragment {
     public static final String TASKID = "taskid";
     private TextView txt_discribtion;
     private TextView txt_date;
+    private ImageView photo;
     private Task mTask;
 
     public static DialogFragmentShow newInstance(UUID uuid) {
@@ -58,11 +61,15 @@ public class DialogFragmentShow extends DialogFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_detail_dialog,null);
         txt_discribtion = view.findViewById(R.id.describtion);
         txt_date = view.findViewById(R.id.date);
+        photo = view.findViewById(R.id.imageViewshow);
+
+        photo.setImageBitmap(PictureUtils.getScaleBitmap(mTask.getPhotoAddress(),getActivity()));
+
         txt_date.setText(mTask.dateToString());
-        txt_discribtion.setText(mTask.getDescribtion());
+        txt_discribtion.setText(mTask.getMDescribtion());
 
         return new AlertDialog.Builder(getActivity())
-                .setTitle(mTask.getTitle())
+                .setTitle(mTask.getMTitle())
                 .setView(view)
                 .setCancelable(true)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.util.Log;
 
 import com.example.caspian.taskmanager.App;
@@ -11,6 +12,7 @@ import com.example.caspian.taskmanager.database.TaskBaseHelper;
 import com.example.caspian.taskmanager.database.TaskCursorWraper;
 import com.example.caspian.taskmanager.database.TaskDbSchema;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListResourceBundle;
@@ -22,7 +24,7 @@ public class TaskLab {
     private static List<Task> mTaskList;
     private static List<Task> mDoneTaskList;
     private static SQLiteDatabase mDatabase;
-    private Context mContext;
+    private static Context mContext;
     private static TaskCursorWraper cursorWraper;
     private static TaskDao taskDao;
 
@@ -34,8 +36,8 @@ public class TaskLab {
     }
 
     private TaskLab(Context context) {
-        /*mContext = context;
-        mDatabase = new TaskBaseHelper(mContext).getWritableDatabase();*/
+        mContext = context;
+        /* mDatabase = new TaskBaseHelper(mContext).getWritableDatabase();*/
         DaoSession daoSession = (App.getApp()).getDaoSession();
         taskDao = daoSession.getTaskDao();
     }
@@ -57,16 +59,16 @@ public class TaskLab {
         /*ContentValues values = getContentValues(task);
         mDatabase.insert(TaskDbSchema.Task.NAME, null, values);*/
         taskDao.insert(task);
-        Log.i("+++", "addTask: " + task.getTitle());
+        Log.i("+++", "addTask: " + task.getMTitle());
     }
 
 
     private ContentValues getContentValues(Task task) {
         ContentValues values = new ContentValues();
         values.put(TaskDbSchema.Task.TaskCols.UUID, task.getId().toString());
-        values.put(TaskDbSchema.Task.TaskCols.TITLE, task.getTitle());
-        values.put(TaskDbSchema.Task.TaskCols.DESCRIPTION, task.getDescribtion());
-        values.put(TaskDbSchema.Task.TaskCols.DATE, task.getDate().getTime());
+        values.put(TaskDbSchema.Task.TaskCols.TITLE, task.getMTitle());
+        values.put(TaskDbSchema.Task.TaskCols.DESCRIPTION, task.getMDescribtion());
+        values.put(TaskDbSchema.Task.TaskCols.DATE, task.getMDate().getTime());
         values.put(TaskDbSchema.Task.TaskCols.ISDONE, task.getMDone() ? 1 : 0);
         values.put(TaskDbSchema.Task.TaskCols.ACCOUNTID, task.getMaccountId().toString());
         return values;
@@ -147,9 +149,9 @@ public class TaskLab {
         mHashMap.put(newTask.getId(), newTask);*/
        /* mDatabase.update(TaskDbSchema.Task.NAME, getContentValues(newTask), TaskDbSchema.Task.TaskCols.UUID + " = ? "
                 , new String[]{oldTask.getId().toString()});*/
-        oldTask.setTitle(newTask.getTitle());
-        oldTask.setDescribtion(newTask.getDescribtion());
-        oldTask.setDate(newTask.getMDate());
+        oldTask.setMTitle(newTask.getMTitle());
+        oldTask.setMDescribtion(newTask.getMDescribtion());
+        oldTask.setMDate(newTask.getMDate());
         oldTask.setMDone(newTask.getMDone());
         taskDao.update(oldTask);
     }
@@ -179,6 +181,11 @@ public class TaskLab {
                         , TaskDao.Properties.MTitle.like("%" + search + "%")).list();
         return taskList;
 
+    }
+
+    public File getPhotoFile(Task task) {
+        File filesDir = mContext.getFilesDir();
+        return new File(filesDir, "IMG_" + task.getMId() + ".JPG");
     }
 
 

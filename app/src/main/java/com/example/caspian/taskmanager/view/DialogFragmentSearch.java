@@ -2,7 +2,6 @@ package com.example.caspian.taskmanager.view;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,13 +17,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.caspian.taskmanager.CallBack;
 import com.example.caspian.taskmanager.R;
 import com.example.caspian.taskmanager.model.Task;
 import com.example.caspian.taskmanager.model.TaskLab;
@@ -185,7 +181,7 @@ public class DialogFragmentSearch extends Fragment {
                 title.setText(task.getMTitle());
                 describe.setText(task.getMDescribtion());
                 bold(task.getMTitle(),text,title);
-                bold(task.getDescribtion(),text,describe);
+                bold(task.getMDescribtion(),text,describe);
                 root.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

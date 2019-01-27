@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".view.DialogFragmentEdit"
-    >
+    tools:context=".view.DialogFragmentEdit">
 
 
     <TextView
@@ -14,12 +13,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:padding="8dp"
         android:text="Describtion:"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewedit" />
 
     <EditText
         android:id="@+id/describtion"
@@ -27,12 +25,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+
         android:layout_marginEnd="8dp"
+        android:lineSpacingExtra="8sp"
+        android:lines="2"
         android:padding="8dp"
         android:text="دارای توزیح"
         android:textColor="@android:color/black"
         android:textSize="20sp"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/describ" />
@@ -60,13 +60,12 @@
         android:padding="8dp"
         android:text="5/10/76"
         android:textAlignment="center"
+        android:textColor="@color/colorAccent"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="@+id/textView3"
-       android:textColor="@color/colorAccent"
-        />
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
 
     <EditText
         android:id="@+id/title_txt"
@@ -76,8 +75,8 @@
         android:layout_marginEnd="8dp"
         android:padding="8dp"
         android:text="Title"
-        android:textColor="@android:color/black"
         android:textAlignment="center"
+        android:textColor="@android:color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView9"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,10 +89,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:padding="8dp"
         android:text="Title:"
         android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/describ"
+        app:layout_constraintStart_toEndOf="@+id/imageViewedit"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
@@ -107,5 +108,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date" />
+
+    <ImageView
+        android:id="@+id/imageViewedit"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_action_camera"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,71 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.DialogFragmentShow"
+    android:gravity="center_horizontal"
+    tools:context=".view.DialogFragmentAdd"
     >
 
-    <TextView
-        android:id="@+id/describ"
+
+    <EditText
+        android:id="@+id/editText_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:text="Describtion:"
-        android:textSize="25sp"
-        app:layout_constraintStart_toEndOf="@+id/imageViewshow"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Title"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/editText_Describtion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView_add"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/describtion"
+    <EditText
+        android:id="@+id/editText_Describtion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:padding="8dp"
-        android:text="دارای توزیح"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:hint="Describtion"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageViewshow"
-        app:layout_constraintTop_toBottomOf="@+id/describ" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:text="Date:"
-        android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/describtion" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_add" />
 
-    <TextView
-        android:id="@+id/date"
+
+    <CheckBox
+        android:id="@+id/checkBox_Done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:gravity="center_vertical"
-        android:padding="8dp"
-        android:text="5/10/76"
+        android:text="Done"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_date" />
+
+    <TextView
+        android:id="@+id/text_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Set Date?"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
-        style="@style/Base.V7.Widget.AppCompat.AutoCompleteTextView"
-        android:textSize="15sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="@+id/textView3" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_Describtion" />
 
     <ImageView
-        android:id="@+id/imageViewshow"
+        android:id="@+id/imageView_add"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"

@@ -2,6 +2,7 @@ package com.example.caspian.taskmanager.view;
 
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -49,9 +50,16 @@ public class ShowIconFragment extends DialogFragment {
         if (task.getPhotoAddress() == null)
             showIcon.setImageResource(R.drawable.task);
         else
-            showIcon.setImageBitmap(PictureUtils.getScaleBitmap(task.getPhotoAddress(), 250, 250));
+            showIcon.setImageBitmap(PictureUtils.getScaleBitmap(task.getPhotoAddress(),750,600));
         return new AlertDialog.Builder(getActivity())
                 .setView(view)
+                .setTitle(task.getMTitle())
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
                 .show();
     }
 }

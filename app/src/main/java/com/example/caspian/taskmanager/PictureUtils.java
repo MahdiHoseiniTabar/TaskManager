@@ -3,11 +3,12 @@ package com.example.caspian.taskmanager;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.Point;
 
 public class PictureUtils {
     public static Bitmap getScaleBitmap(String path, int destWith, int destHeight) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
+       /* BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         int srcWith = options.outWidth;
         int srcHight = options.outHeight;
@@ -18,8 +19,12 @@ public class PictureUtils {
             samplSize = Math.round((hight > with) ? hight : with);
         }
         options = new BitmapFactory.Options();
-        options.inSampleSize = samplSize;
-        return BitmapFactory.decodeFile(path, options);
+        options.inSampleSize = samplSize;*/
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(path),destWith,destHeight,false);
+        return  Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
     }
 
     public static Bitmap getScaleBitmap(String path, Activity activity) {

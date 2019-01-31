@@ -185,7 +185,7 @@ public class DialogFragmentEdit extends DialogFragment {
             photo.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_camera));
         }
         else{
-            Bitmap bitmap = PictureUtils.getScaleBitmap(photoFile.getPath(),100,100);
+            Bitmap bitmap = PictureUtils.getScaleBitmap(photoFile.getPath(),250,250);
             photo.setImageBitmap(bitmap);
         }
     }

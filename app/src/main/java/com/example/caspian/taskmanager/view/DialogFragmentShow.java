@@ -65,7 +65,7 @@ public class DialogFragmentShow extends DialogFragment {
         if (mTask.getPhotoAddress() == null)
             photo.setImageResource(R.drawable.task);
         else
-            photo.setImageBitmap(PictureUtils.getScaleBitmap(mTask.getPhotoAddress(), 100, 100));
+            photo.setImageBitmap(PictureUtils.getScaleBitmap(mTask.getPhotoAddress(), 250, 250));
 
         txt_date.setText(mTask.dateToString());
         txt_discribtion.setText(mTask.getMDescribtion());

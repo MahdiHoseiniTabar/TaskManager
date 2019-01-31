@@ -254,7 +254,7 @@ public class ListFragmentAll extends Fragment {
                 if (task.getPhotoAddress() == null)
                     mCircleImageView.setImageResource(R.drawable.task);
                 else
-                    mCircleImageView.setImageBitmap(PictureUtils.getScaleBitmap(task.getPhotoAddress(), 40,40));
+                    mCircleImageView.setImageBitmap(PictureUtils.getScaleBitmap(task.getPhotoAddress(), 100,100));
                 //  icon.setText(task.getTitle());
                 title.setText(task.getMTitle());
                 date.setText(task.dateToString());
